@@ -23,24 +23,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //--------------------------this route for user to sign up
 Route::post('/signup','Api\UserController@signup');
 //----------------------------this route for user to sign in 
-Route::post('/login','Api\UserController@login');
+Route::post('/login','Api\UserController@signin');
 //-------------------------then all routes with be grouped to authenticate them
 
 //----------------------sanctum generate token for user 
 Route::post('/sanctum/token', function (Request $request) {
-    //return "hiiiiiii";
     $request->validate([
         'email' => 'required|email',
         'password' => 'required',
         'device_name' => 'required'
     ]);
-    // return "hiiiiii";
-    $user = User::where('email', $request->email)->first();
-    if (! $user || ! Hash::check($request->password, $user->password)) {
-        return ([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
-    }
-
-    return $user->createToken($request->device_name)->plainTextToken;
 });
