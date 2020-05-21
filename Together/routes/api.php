@@ -24,6 +24,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/signup','Api\UserController@signup');
 //----------------------------this route for user to sign in 
 Route::post('/login','Api\UserController@signin');
+//-------------------------------this route to view user profile
+Route::get('/show','Api\UserController@show');
+//-----------------------------------this to update profile
+Route::post('/update/{id}','Api\UserController@update');
 //-------------------------then all routes with be grouped to authenticate them
 
 //----------------------sanctum generate token for user 

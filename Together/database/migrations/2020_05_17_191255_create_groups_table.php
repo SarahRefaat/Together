@@ -20,7 +20,9 @@ class CreateGroupsTable extends Migration
             $table->integer('max_member_number');
             $table->integer('duration');
             $table->string('name');
-            
+            $table->string('description');
+            $table->integer('current_number_of_members');
+            $table->string('status');
             $table->timestamps();
         });
     }

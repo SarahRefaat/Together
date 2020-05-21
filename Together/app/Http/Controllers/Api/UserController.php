@@ -22,6 +22,7 @@ class UserController extends Controller
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);   
         }
+        else{
         $user=User::create(['name'=>$request->name,
         'email'=>$request->email,
         'password'=>$request->password,
@@ -30,12 +31,13 @@ class UserController extends Controller
         'address'=>$request->address,
         'photo'=>$profileImage]);
         if($user){
-        return ['response'=>'Signed In uccessfully'];}
+        return ['response'=>'Signed In Successfully'];}
         else {
             return ['response'=>'plz fill all required feilds'];
         }
     }
-    //----------------------this functio to login
+    }
+    //----------------------this function to login
     public function signin(Request $request){
          $user=User::where('email',$request->email)->first();
          
@@ -44,7 +46,7 @@ class UserController extends Controller
              $user=User::where('password',$request->password)->first();
              if($user){
                 $token=$user->createToken($request->email)->plainTextToken;
-                 return ['token' => $token];
+                 return ['token' => $token,'id'=>$user->id];
              }
              else{
                 return ['response'=>'password not correct'];
@@ -53,5 +55,38 @@ class UserController extends Controller
          else{
             return ['response'=>'this mail not registered'];
          }
+    }
+    //---------------------------- this function to view Profile
+    public function show(Request $request){
+        $id=$request->input('id');
+        $user=User::where('id',$id)->first();
+        $ret=['name'=>$user->name,
+        'email'=>$user->email,
+        'gender'=>$user->gender,
+        'age'=>$user->age,
+        'address'=>$user->address,];
+        if($user){
+            return ['response'=>$ret];
+        }
+        else{
+            return ['response'=>'error param'];
+        }
+    }
+    //------------------------------ this function to edit profile
+    public function update(Request $request,$id){
+            $user=User::where('id',$id)->first();
+            if($user){
+                $valid=$request->validate([]);
+                if($valid){
+            $user=User::where('id',$id)->first()->update($request->all());
+            return ['response'=>'updated Successfully'];
+       }
+       else{
+           return ['response'=>'not valid'];
+       }
+    }
+       else{
+        return ['response'=>'this user is not exist'];               
+    }
     }
 }
