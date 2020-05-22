@@ -19,6 +19,7 @@ class AddClomnsToUsers extends Migration
             $table->string('gender');
             $table->string('address')->nullable();
             $table->string('photo')->nullable();
+            $table->biginteger('group_id')->nullable();
         });
     }
 

@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     //-------------------this function to sign up 
     public function signup(Request $request){
-        $user=User::where('email',$request->email);
+        $user=User::where('email',$request->email)->first();
         if($user){
             return ['response'=>'this email is exist '];
         }

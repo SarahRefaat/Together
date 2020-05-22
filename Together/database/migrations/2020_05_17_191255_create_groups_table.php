@@ -23,6 +23,7 @@ class CreateGroupsTable extends Migration
             $table->string('description');
             $table->integer('current_number_of_members');
             $table->string('status');
+            $table->biginteger('interest_id');
             $table->timestamps();
         });
     }

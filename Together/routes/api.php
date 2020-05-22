@@ -27,7 +27,23 @@ Route::post('/login','Api\UserController@signin');
 //-------------------------------this route to view user profile
 Route::get('/show','Api\UserController@show');
 //-----------------------------------this to update profile
-Route::post('/update/{id}','Api\UserController@update');
+Route::get('/update/{id}','Api\UserController@update');
+//-------------------------this route to create group
+Route::post('/createGroup','Api\GroupController@create');
+//-------------------------this route to show group
+Route::get('/show/{groupid}','Api\GroupController@show');
+//-----------------------------this route to add member
+Route::get('/add/groupid/id','Api\GroupController@addMember');
+//----------------------------this route to remove member
+Route::get('/remove/groupid/id','Api\GroupController@removeMember');
+//----------------------------this route to add new task
+Route::post('/add','Api\TaskController@add');
+//------------------------------this route to add task to in-progress list
+Route::get('/progress/id','Api\TaskController@moveToProgress');
+//------------------------------this route to move function to done
+Route::get('/done/id','Api\TaskController@moveToDone');
+
+
 //-------------------------then all routes with be grouped to authenticate them
 
 //----------------------sanctum generate token for user 
