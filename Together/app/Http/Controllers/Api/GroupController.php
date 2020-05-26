@@ -13,6 +13,7 @@ class GroupController extends Controller
       $group=Group::create($request->all());
       $user=User::find($request->id);
       $user->admin=1;
+      return ['response'=>'successfully '];
       }
       //-------------------------this fuction to add member to group
       public function addMember($groupid,$id){
