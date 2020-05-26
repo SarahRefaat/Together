@@ -10,6 +10,10 @@ class GroupController extends Controller
 {
     //------------------this function to create a new group
     public function create(Request $request){
+      $group=Group::where('name',$request->name)->first();
+      if($group){
+        return ['response'=>'this group title is exist'];
+      }
       $user=User::find($request->id);
       $user->admin=1;
       $group=Group::create($request->except('id'));
