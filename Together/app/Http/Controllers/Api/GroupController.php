@@ -67,11 +67,18 @@ class GroupController extends Controller
         $group=Group::find($groupid);
         if($group){
         $user=User::find($id);
-        $user->group_id=0;
         $group->users()->detach($user);
         $group->current_number_of_memebers=$group->current_number_of_memebers-1;
         return ['response'=>'member removed successfully'];
         }
         return ['response'=>'this group doesnt exist'];
+      }
+      //------------------ this function for user how wants to leave how 7orr
+      public function leave($groupid,$id){
+        $group=Group::find($groupid);
+        $user=User::find($id);
+        $group->users()->detach($user);
+        $group->current_number_of_memebers=$group->current_number_of_memebers-1;
+        return ['response'=>'member leaved successfully'];
       }
 }

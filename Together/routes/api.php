@@ -45,7 +45,8 @@ Route::get('/progress/{id}','Api\TaskController@moveToProgress');
 Route::get('/done/{id}','Api\TaskController@moveToDone');
 //-----------------------------this route to get all groups with the same interest
 Route::get('/groups/{id}','Api\InterestController@ListGroups');
-
+//---------------------------- this route for user to leave el group 
+Route::get('/leave/{groupid}/{id}','Api\GroupController@leave');
 //-------------------------then all routes with be grouped to authenticate them
 
 //----------------------sanctum generate token for user 
