@@ -78,23 +78,27 @@ class UserController extends Controller
         $id=$request->input('id');
         $user=User::where('id',$id)->first();
         //----------here to return interests of user
-        $interestsList=$user->interests();
-        $ret=['name'=>$user->name,
-        'email'=>$user->email,
-        'gender'=>$user->gender,
-        'age'=>$user->age,
-        'address'=>$user->address,
-        'intrests'=>$interestsList];
 
+        $interestsList=$user->interests;
+        $userInterests=array();
+         foreach($interestsList as $interest){
+           array_push($userInterests,$interest->name);
+         }
+         $groups=$user->groups;
+         $groupsNames=array();
+         if($groups){
+         foreach($groups as $group){
+             array_push($groupsNames,'name'->$group->name,'id'->$group->id);
+         }
+        }
         if($user){
-            //return ['response'=>$ret];
-           return ['name'=>$user->name,
+        return ['name'=>$user->name,
         'email'=>$user->email,
         'gender'=>$user->gender,
         'age'=>$user->age,
         'address'=>$user->address,
-        'intrests'=>$interestsList];
-        
+        'intrests'=>$userInterests,
+        'groups'=>$groupsNames];
         }
         else{
             return ['response'=>'error param'];

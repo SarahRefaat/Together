@@ -34,9 +34,9 @@ Route::post('/createGroup','Api\GroupController@create');
 //-------------------------this route to show group
 Route::get('/show/{groupid}','Api\GroupController@show');
 //-----------------------------this route to add member
-Route::get('/add/groupid/id','Api\GroupController@addMember');
+Route::get('/add/{groupid}/{id}','Api\GroupController@addMember');
 //----------------------------this route to remove member
-Route::get('/remove/groupid/id','Api\GroupController@removeMember');
+Route::get('/remove/{groupid}/{id}','Api\GroupController@removeMember');
 //----------------------------this route to add new task
 Route::post('/add','Api\TaskController@add');
 //------------------------------this route to add task to in-progress list

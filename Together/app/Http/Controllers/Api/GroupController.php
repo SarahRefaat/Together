@@ -10,9 +10,10 @@ class GroupController extends Controller
 {
     //------------------this function to create a new group
     public function create(Request $request){
-      $group=Group::create($request->all());
       $user=User::find($request->id);
       $user->admin=1;
+      $group=Group::create($request->except('id'));
+      $group->users()->attach($user);
       return ['response'=>'successfully '];
       }
       //-------------------------this fuction to add member to group
@@ -22,7 +23,7 @@ class GroupController extends Controller
         $user=User::find($id);
         if($group->current_number_of_members<$group->max_member_number){
         $group->current_number_of_members=$group->current_number_of_members+1;
-        $user->group_id=$group->id;
+        $group->users()->attach($user);
         return ['response'=>'member added successfully'];
         }
         else{
@@ -61,6 +62,7 @@ class GroupController extends Controller
         if($group){
         $user=User::find($id);
         $user->group_id=0;
+        $group->users()->detach($user);
         $group->current_number_of_memebers=$group->current_number_of_memebers-1;
         return ['response'=>'member removed successfully'];
         }
