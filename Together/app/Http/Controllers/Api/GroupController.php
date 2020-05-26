@@ -33,12 +33,17 @@ class GroupController extends Controller
       //--------------------this function to get this group info
       public function show($groupid){
         $group=Group::find($groupid);
+        $members=$group->users();
+        $memberNames=array();
+        foreach($members as $member){
+          array_push($memberNames,User::where('email',$member->email)->first());
+        }
         if($group){
         $ret=['name'=>$group->name,
         'description'=>$group->sdescription,
         'status'=>$group->status,
         'duration'=>$group->duration,
-        'members'=>$group->users,
+        'members'=>$memberNames,
         // 'members'=>[
         // foreach ($group->users as $user){
         //   'member'=> $user->name];}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 use App\User;
+use App\Interest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\HasApiTokens;
@@ -75,6 +76,7 @@ class UserController extends Controller
     public function show(Request $request){
         $id=$request->input('id');
         $user=User::where('id',$id)->first();
+        //----------here to return interests of user
         $interestsList=$user->interests();
         $ret=['name'=>$user->name,
         'email'=>$user->email,
