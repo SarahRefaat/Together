@@ -32,7 +32,7 @@ class UserController extends Controller
          $listOfInterests=$request->interests;
          $interestArr=array();
           foreach($listOfInterests as $interest){
-             array_push($interestArr,Interest::where('name',$interest)->first());
+             array_push($interestArr,Interest::where('name',$interest)->first()->id);
              }
         
         $user->name = $request->name;
@@ -41,10 +41,11 @@ class UserController extends Controller
         $user->age =$request->age;
         $user->gender = $request->gender;
         $user->address=$request->address;
+        $user->save();
         //---------here i attach el inteerests
         $user->interests()->attach($interestArr);
         //------------- here user saved
-        $user->save();
+        
         if($user){
         return ['response'=>'Signed In Successfully'];}
 
@@ -86,7 +87,14 @@ class UserController extends Controller
         'intrests'=>$interestsList];
 
         if($user){
-            return ['response'=>$ret];
+            //return ['response'=>$ret];
+           return ['name'=>$user->name,
+        'email'=>$user->email,
+        'gender'=>$user->gender,
+        'age'=>$user->age,
+        'address'=>$user->address,
+        'intrests'=>$interestsList];
+        
         }
         else{
             return ['response'=>'error param'];
