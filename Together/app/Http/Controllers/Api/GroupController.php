@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 use App\Group;
 use App\User;
+use App\Interest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -39,7 +40,7 @@ class GroupController extends Controller
       //--------------------this function to get this group info
       public function show($groupid){
         $group=Group::find($groupid);
-        $members=$group->users();
+        $members=$group->users;
         $memberNames=array();
         foreach($members as $member){
           array_push($memberNames,User::where('email',$member->email)->first());
@@ -50,6 +51,7 @@ class GroupController extends Controller
         'status'=>$group->status,
         'duration'=>$group->duration,
         'members'=>$memberNames,
+        'interest'=>$group->interest->name
         // 'members'=>[
         // foreach ($group->users as $user){
         //   'member'=> $user->name];}

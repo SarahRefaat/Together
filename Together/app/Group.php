@@ -16,7 +16,7 @@ class Group extends Model
     }
     //------------- this repreent one to many realtion btn group and interest
     public function interest(){
-        return $this->hasOne('App\Interest');
+        return $this->belongsTo('App\Interest');
     }
     //----------------- this represent one to many realtion btn group and task 
     public function tasks(){
