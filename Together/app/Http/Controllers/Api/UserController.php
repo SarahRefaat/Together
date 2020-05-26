@@ -12,30 +12,45 @@ class UserController extends Controller
 {
     //-------------------this function to sign up 
     public function signup(Request $request){
+        //-----here i ckeck if this is his first account in our app
         $user=User::where('email',$request->email)->first();
         if($user){
             return ['response'=>'this email is exist '];
         }
+        //-------------- then if itis his first sign up
+        $user=new User; 
+        // -------------------here if pic is attached
         if($request->file('photo')){
             $image=$request->photo;
             $destinationPath = 'images/'; // upload path
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);   
+            $image->move($destinationPath, $profileImage);
+            $user->photo = $profileImage;   
         }
-        else{
-        $user=User::create(['name'=>$request->name,
-        'email'=>$request->email,
-        'password'=>$request->password,
-        'age'=>$request->age,
-        'gender'=>$request->gender,
-        'address'=>$request->address,
-        'photo'=>$profileImage]);
+        // ------------her to attach his intrests
+         $listOfInterests=$request->interests;
+         $interestArr=array();
+          foreach($listOfInterests as $interest){
+             array_push($interestArr,Interest::where('name',$interest)->first());
+             }
+        
+        $user->name = $request->name;
+        $user->email=$request->email;
+        $user->password= $request->password;
+        $user->age =$request->age;
+        $user->gender = $request->gender;
+        $user->address=$request->address;
+        //---------here i attach el inteerests
+        $user->interests()->attach($interestArr);
+        //------------- here user saved
+        $user->save();
         if($user){
         return ['response'=>'Signed In Successfully'];}
+
         else {
+
             return ['response'=>'plz fill all required feilds'];
         }
-    }
     }
     //----------------------this function to login
     public function signin(Request $request){
@@ -60,11 +75,14 @@ class UserController extends Controller
     public function show(Request $request){
         $id=$request->input('id');
         $user=User::where('id',$id)->first();
+        $interestsList=$user->interests();
         $ret=['name'=>$user->name,
         'email'=>$user->email,
         'gender'=>$user->gender,
         'age'=>$user->age,
-        'address'=>$user->address,];
+        'address'=>$user->address,
+        'intrests'=>$interestsList];
+
         if($user){
             return ['response'=>$ret];
         }

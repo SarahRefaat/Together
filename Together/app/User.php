@@ -37,8 +37,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
+    //------------ this represent many to many relation btn 
     public function groups(){
         return $this->belongsToMany('App\Group');
+    }
+    //-------------this represent many to many interests and group
+    public function interests(){
+        return $this->belongsToMany('App\Interest');
     }
 }

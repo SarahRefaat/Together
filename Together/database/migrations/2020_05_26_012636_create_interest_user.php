@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class GroupUser extends Migration
+class CreateInterestUser extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class GroupUser extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('group_user', function (Blueprint $table) {
-        $table->increments('id');
-        $table->foreignId('user_id');
-        $table->foreignId('group_id');
-
+        Schema::create('interest_user', function (Blueprint $table) {
+            $table->increments('id');
+            $table->foreignId('user_id');
+            $table->foreignId('interest_id');
+            $table->timestamps();
         });
     }
 
@@ -29,6 +28,6 @@ class GroupUser extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('interest_user');
     }
 }
