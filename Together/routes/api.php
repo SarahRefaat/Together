@@ -43,7 +43,8 @@ Route::post('/add','Api\TaskController@add');
 Route::get('/progress/id','Api\TaskController@moveToProgress');
 //------------------------------this route to move function to done
 Route::get('/done/id','Api\TaskController@moveToDone');
-
+//-----------------------------this route to get all groups with the same interest
+Route::get('/groups/id','Api\InterestController@ListGroups');
 
 //-------------------------then all routes with be grouped to authenticate them
 
