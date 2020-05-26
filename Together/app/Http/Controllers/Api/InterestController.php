@@ -12,7 +12,7 @@ class InterestController extends Controller
     //---------------- this function to get groups under certain interest
     public function ListGroups($id){
         $interest=Interest::find($id);
-        $groups=$interest->groups();
+        $groups=$interest->groups;
       return ['reponse'=>$groups];
     }
     //-------------------this function to add new interes

@@ -40,11 +40,11 @@ Route::get('/remove/{groupid}/{id}','Api\GroupController@removeMember');
 //----------------------------this route to add new task
 Route::post('/add','Api\TaskController@add');
 //------------------------------this route to add task to in-progress list
-Route::get('/progress/id','Api\TaskController@moveToProgress');
+Route::get('/progress/{id}','Api\TaskController@moveToProgress');
 //------------------------------this route to move function to done
-Route::get('/done/id','Api\TaskController@moveToDone');
+Route::get('/done/{id}','Api\TaskController@moveToDone');
 //-----------------------------this route to get all groups with the same interest
-Route::get('/groups/id','Api\InterestController@ListGroups');
+Route::get('/groups/{id}','Api\InterestController@ListGroups');
 
 //-------------------------then all routes with be grouped to authenticate them
 
