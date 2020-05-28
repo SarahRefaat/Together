@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 use App\Group;
 use App\User;
 use App\Interest;
+use App\UserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -142,4 +143,21 @@ class GroupController extends Controller
         }
           return ['response'=>'updated failed param error'];
       }
+      //-------------------- this to get all request of certain group
+      public function requests($groupId){
+        $group=Group::find($groupId);
+        return $group->requests;
+      }
+      //--------------------- this for user to send join request
+      public function requestToJoin(Request $outRequest,$groupId,$id){
+        $request=new UserRequest;
+        $request->user_id=$id;
+        $request->group_id=$groupId;
+        if($outRequest->content){
+        $request->request_content=$outRequest->content;
+        }
+        $request->save();
+        return ['response'=>'Request sent successfully wait for admin to accept it'];
+    }
+      
 }

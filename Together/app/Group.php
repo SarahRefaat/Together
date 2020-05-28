@@ -22,4 +22,8 @@ class Group extends Model
     public function tasks(){
         return $this->hasMany('App\Task');
     }
+    //---------------------- this repesent relation btn request and group
+    public function requests(){
+        return $this->hasMany('App\UserRequest');
+    }
 }

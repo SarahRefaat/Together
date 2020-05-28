@@ -55,6 +55,10 @@ Route::get('/todo/{groupId}','Api\TaskController@listTodos');
 Route::get('/progresses/{groupId}','Api\TaskController@listProgress');
 //-------------------------- this to get done function of same group
 Route::get('/dones/{groupId}','Api\TaskController@listDone');
+//-------------------------- this to send request
+Route::post('/request/{groupId}/{id}','Api\GroupController@requestToJoin');
+//-------------------------- this to show all request
+Route::get('/requests/{groupId}','Api\GroupController@requests');
 
 // //----------------------sanctum generate token for user 
 // Route::post('/sanctum/token', function (Request $request) {
