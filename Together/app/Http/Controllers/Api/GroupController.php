@@ -15,16 +15,44 @@ class GroupController extends Controller
       if($group){
         return ['response'=>'this group title is exist'];
       }
-      $user=User::find($request->id);
-      $user->admin=1;
-      $group=Group::create($request->except('id'));
-      $group->users()->attach($user);
-      return ['response'=>'successfully '];
+      $admin=User::find($request->id);
+      
+      //$group=Group::create($request->except('id','other'));
+      $group=new Group();
+      $group->admin_id=$admin->id;
+      $group->name=$request->name;
+      $group->description=$request->description;
+      $group->max_member_number=$request->max_member_number;
+      $group->duration=$request->duration;
+      $group->current_number_of_members=0;
+      $group->status=$request->status;
+      if($request->other){
+        $exist=Interest::where('name',$request->other)->first();
+                if($exist){
+                   $group->interest_id = $exist->id;  
+                }
+                else{
+             $newInterest=new Interest;
+             $newInterest->name = $request->other; 
+             $newInterest->save();
+             $group->interest_id = $newInterest->id ;
+      }
+    }
+    else{
+      $interest=Interest::where('name',$request->interest)->first();
+      $group->interest_id = $interest->id ;
+    } 
+      $group->save();
+      $group->users()->attach($admin);
+      return ['response'=>'Group Created Successfully '];
       }
       //-------------------------this fuction to add member to group
       public function addMember($groupid,$id){
+        $adminMember=User::find($request->input('current_user_id'));
+        
         $group=Group::find($groupid);
         if($group){
+          if($group->admin_id==$adminMember->id){
         $user=User::find($id);
         if($group->current_number_of_members<$group->max_member_number){
         $group->current_number_of_members=$group->current_number_of_members+1;
@@ -35,10 +63,17 @@ class GroupController extends Controller
           return ['response'=>'this group id full'];
         }
       }
+      else{
+        return ['response'=>'u aren\'t the admin'];
+      }
       return ['response'=>'this group doesnt exist'];
       }
+    
+    
+  }
       //--------------------this function to get this group info
       public function show($groupid){
+        
         $group=Group::find($groupid);
         $members=$group->users;
         $memberNames=array();
@@ -56,7 +91,12 @@ class GroupController extends Controller
         // foreach ($group->users as $user){
         //   'member'=> $user->name];}
         ];
-        return ['response'=>$ret];
+        return ['name'=>$group->name,
+        'description'=>$group->sdescription,
+        'status'=>$group->status,
+        'duration'=>$group->duration,
+        'members'=>$memberNames,
+        'interest'=>$group->interest->name];
         }
         else{
           return ['response'=>'this group id not exist'];
@@ -64,13 +104,19 @@ class GroupController extends Controller
       }
       //---------------------this function to remove member from group
       public function removeMember($groupid,$id){
+        $adminMember=User::find($request->input('current_user_id'));
         $group=Group::find($groupid);
         if($group){
+          if($group->admin_id==$adminMember->id){
         $user=User::find($id);
         $group->users()->detach($user);
         $group->current_number_of_memebers=$group->current_number_of_memebers-1;
         return ['response'=>'member removed successfully'];
         }
+      }
+      else{
+        return ['response'=>'u aren\'t the admin'];
+      }
         return ['response'=>'this group doesnt exist'];
       }
       //------------------ this function for user how wants to leave how 7orr
@@ -80,5 +126,20 @@ class GroupController extends Controller
         $group->users()->detach($user);
         $group->current_number_of_memebers=$group->current_number_of_memebers-1;
         return ['response'=>'member leaved successfully'];
+      }
+      //---------------------------- this function to update group information
+      public function updateGroup(Request $request,$groupId){
+        $adminMember=User::find($request->input('current_user_id'));
+          $group=Group::find($groupId);
+          if($group->admin_id==$adminMember->id){
+          $group->update($request->all());
+          if($group){
+            return ['response'=>'updated successfully'];
+          }
+        }
+        else{
+          return ['response'=>'u aren\'t the admin'];
+        }
+          return ['response'=>'updated failed param error'];
       }
 }

@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //--------------------------this route for user to sign up
 Route::post('/signup','Api\UserController@signup');
 //----------------------------this route for user to sign in 
-Route::post('/login','Api\UserController@signin');
+Route::post('/signin','Api\UserController@signin');
 //-------------------------------this route to view user profile
 Route::get('/show','Api\UserController@show');
 //-----------------------------------this to update profile
@@ -47,13 +47,20 @@ Route::get('/done/{id}','Api\TaskController@moveToDone');
 Route::get('/groups/{id}','Api\InterestController@ListGroups');
 //---------------------------- this route for user to leave el group 
 Route::get('/leave/{groupid}/{id}','Api\GroupController@leave');
+//----------------------------------- this route to update group info
+Route::post('/updateGroup/{id}','Api\GroupController@updateGroup');
 //-------------------------then all routes with be grouped to authenticate them
+Route::get('/todo/{groupId}','Api\TaskController@listTodos');
+//-------------------------- this to get in-progress tasks of group 
+Route::get('/progresses/{groupId}','Api\TaskController@listProgress');
+//-------------------------- this to get done function of same group
+Route::get('/dones/{groupId}','Api\TaskController@listDone');
 
-//----------------------sanctum generate token for user 
-Route::post('/sanctum/token', function (Request $request) {
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-        'device_name' => 'required'
-    ]);
-});
+// //----------------------sanctum generate token for user 
+// Route::post('/sanctum/token', function (Request $request) {
+//     $request->validate([
+//         'email' => 'required|email',
+//         'password' => 'required',
+//         'device_name' => 'required'
+//     ]);
+// });

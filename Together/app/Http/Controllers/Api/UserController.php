@@ -29,11 +29,32 @@ class UserController extends Controller
             $user->photo = $profileImage;   
         }
         // ------------her to attach his intrests
+        $interestArr=array();
+        if($request->interests){
          $listOfInterests=$request->interests;
-         $interestArr=array();
           foreach($listOfInterests as $interest){
              array_push($interestArr,Interest::where('name',$interest)->first()->id);
              }
+            }
+           
+        //--------------------here if user has other interests allah y5rb bytooo
+        if($request->others){
+            foreach($request->others as $other){
+                $exist=Interest::where('name',$other)->first();
+                if($exist){
+                    array_push($interestArr,Interest::where('name',$other)->first()->id);     
+                }
+                else{
+             $newInterest=new Interest;
+             $newInterest->name = $other; 
+             $newInterest->save();
+             array_push($interestArr,Interest::where('name',$other)->first()->id); 
+             }  
+            }
+        }
+        else{
+            return ['response'=>'u must enter one of them interests and others '];
+        }
         
         $user->name = $request->name;
         $user->email=$request->email;
