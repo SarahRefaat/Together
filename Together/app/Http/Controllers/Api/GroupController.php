@@ -27,22 +27,8 @@ class GroupController extends Controller
       $group->duration=$request->duration;
       $group->current_number_of_members=0;
       $group->status=$request->status;
-      if($request->other){
-        $exist=Interest::where('name',$request->other)->first();
-                if($exist){
-                   $group->interest_id = $exist->id;  
-                }
-                else{
-             $newInterest=new Interest;
-             $newInterest->name = $request->other; 
-             $newInterest->save();
-             $group->interest_id = $newInterest->id ;
-      }
-    }
-    else{
       $interest=Interest::where('name',$request->interest)->first();
       $group->interest_id = $interest->id ;
-    } 
       $group->save();
       $group->users()->attach($admin);
       return ['response'=>'Group Created Successfully '];
@@ -150,11 +136,11 @@ class GroupController extends Controller
       }
       //--------------------- this for user to send join request
       public function requestToJoin(Request $outRequest,$groupId,$id){
-        $request=new UserRequest;
-        $request->user_id=$id;
-        $request->group_id=$groupId;
+        $request = new UserRequest;
+        $request->user_id = $id;
+        $request->group_id = $groupId;
         if($outRequest->content){
-        $request->request_content=$outRequest->content;
+        $request->request_content = $outRequest->content;
         }
         $request->save();
         return ['response'=>'Request sent successfully wait for admin to accept it'];

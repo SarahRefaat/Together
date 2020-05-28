@@ -38,24 +38,6 @@ class UserController extends Controller
             }
            
         //--------------------here if user has other interests allah y5rb bytooo
-        if($request->others){
-            foreach($request->others as $other){
-                $exist=Interest::where('name',$other)->first();
-                if($exist){
-                    array_push($interestArr,Interest::where('name',$other)->first()->id);     
-                }
-                else{
-             $newInterest=new Interest;
-             $newInterest->name = $other; 
-             $newInterest->save();
-             array_push($interestArr,Interest::where('name',$other)->first()->id); 
-             }  
-            }
-        }
-        else{
-            return ['response'=>'u must enter one of them interests and others '];
-        }
-        
         $user->name = $request->name;
         $user->email=$request->email;
         $user->password= $request->password;
