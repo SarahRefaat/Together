@@ -100,7 +100,7 @@ class UserController extends Controller
         'gender'=>$user->gender,
         'age'=>$user->age,
         'address'=>$user->address,
-        'intrests'=>$userInterests,
+        'interests'=>$userInterests,
         'groups'=>$groupsNames];
         }
         else{

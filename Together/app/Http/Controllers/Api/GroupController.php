@@ -34,13 +34,13 @@ class GroupController extends Controller
       $group->users()->attach($admin);
       return ['response'=>'Group Created Successfully '];
       }
-      //-------------------------this fuction to add member to group
-      public function addMember($groupid,$id){
+      //-------------------------this fuction to add member to p
+      public function addMember($groupid,$id,Request $request){
         $adminMember=User::find($request->input('current_user_id'));
         
         $group=Group::find($groupid);
         if($group){
-          if($group->admin_id==$adminMember->id){
+          if($group->admin_id == $adminMember->id){
         $user=User::find($id);
         if($group->current_number_of_members<$group->max_member_number){
         $group->current_number_of_members=$group->current_number_of_members+1;
