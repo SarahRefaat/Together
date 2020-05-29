@@ -91,7 +91,7 @@ class UserController extends Controller
          $groupsNames=array();
          if($groups){
          foreach($groups as $group){
-             array_push($groupsNames,'name'->$group->name,'id'->$group->id);
+             array_push($groupsNames,['name'=>$group->name,'id'=>$group->id]);
          }
         }
         if($user){

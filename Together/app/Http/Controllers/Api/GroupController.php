@@ -26,6 +26,7 @@ class GroupController extends Controller
       $group->max_member_number=$request->max_member_number;
       $group->duration=$request->duration;
       $group->current_number_of_members=0;
+      $group->level=$request->level;
       $group->status=$request->status;
       $interest=Interest::where('name',$request->interest)->first();
       $group->interest_id = $interest->id ;
