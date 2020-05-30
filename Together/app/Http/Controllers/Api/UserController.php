@@ -13,7 +13,16 @@ class UserController extends Controller
 {
     //-------------------this function to sign up 
     public function signup(Request $request){
+        //----------- this to vslidate request
+        $valid = $request->validate([
+            'name' => 'required|min:3|max:255',
+            'email' => 'required',
+            'password' => 'required',
+            'gender' => 'required',
+            'BirthDate' => 'required',
+        ]);
         //-----here i ckeck if this is his first account in our app
+        if($valid){
         $user=User::where('email',$request->email)->first();
         if($user){
             return ['response'=>'This email is exist '];
@@ -41,7 +50,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email=$request->email;
         $user->password= $request->password;
-        $user->age =$request->age;
+        $user->BirthDate =$request->BirthDate;
         $user->gender = $request->gender;
         $user->address=$request->address;
         $user->save();
@@ -57,8 +66,13 @@ class UserController extends Controller
             return ['response'=>'Plz fill all required feilds'];
         }
     }
+}
     //----------------------this function to login
     public function signin(Request $request){
+        $valid = $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
          $user=User::where('email',$request->email)->first();
          
          if($user){
@@ -69,11 +83,11 @@ class UserController extends Controller
                  return ['token' => $token,'id'=>$user->id];
              }
              else{
-                return ['response'=>'password not correct'];
+                return ['response'=>'Password not correct'];
              }
          }
          else{
-            return ['response'=>'this mail not registered'];
+            return ['response'=>'This mail not registered'];
          }
     }
     //---------------------------- this function to view Profile
@@ -99,30 +113,24 @@ class UserController extends Controller
         'name'=>$user->name,
         'email'=>$user->email,
         'gender'=>$user->gender,
-        'age'=>$user->age,
+        'BirthDate'=>$user->BirthDate,
         'address'=>$user->address,
         'interests'=>$userInterests,
         'groups'=>$groupsNames];
         }
         else{
-            return ['response'=>'error param'];
+            return ['response'=>'Error param'];
         }
     }
     //------------------------------ this function to edit profile
     public function update(Request $request,$id){
             $user=User::where('id',$id)->first();
             if($user){
-                // $valid=$request->validate([]);
-                // if($valid){
             $user=User::where('id',$id)->first()->update($request->all());
-            return ['response'=>'updated Successfully'];
-    //    }
-    //    else{
-    //        return ['response'=>'not valid'];
-    //    }
+            return ['response'=>'Updated Successfully'];
     }
        else{
-        return ['response'=>'this user is not exist'];               
+        return ['response'=>'This user is not exist'];               
     }
     }
     //------------------- this to retrive all groups of certain user

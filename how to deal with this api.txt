@@ -1,0 +1,236 @@
+
+        =============================================<Together app api>==============================================
+
+Postman : http://192.168.3.2:8000/api/signup
+  Route::post('/signup','Api\UserController@signup');
+
+    -This route will be used to sign up a new user
+      * email must be unique
+
+    - method : post
+
+    - request 
+              - head : application/json
+              - body : 
+                    type : json
+                    [name , email , password , gender , BirthDate] not null
+                    [address , photo ] accept null
+    -example of request :
+     
+                         { "name" : "ali",
+                           "email" : "ali@xwz.rey",
+                           "password" : "112233",
+                           "gender" : "male",
+                           "BirthDate" : "12/12/1996"
+                           "address" : "Alex , somuha"}
+   -response :
+              type : json
+              In success : { "response" : "Sign up successfully"}  => with status code:200
+              In failure : {
+                             "message": "The given data was invalid.",
+                             "errors": {
+                             "password": [
+                                       "The password field is required."
+                                         ],
+                              "gender": [
+                                     "The gender field is required."
+                                        ]
+                                       }} => wih status code:442
+         
+      
+                      working flow of this function 
+   this function is of usercontroller - first it validates request 
+                                      - check if this user alrealy exist
+                                      - then create user object
+                                      - store it to database
+                                      - return response
+
+--------------------------------------------------------------------------------
+                                                         
+Postman : http://192.168.3.2:8000/api/signin
+ Route::post('/signin','Api\UserController@signin');
+
+-This route will be used to sign in an exist user
+      
+
+    - method : post
+
+    - request body : 
+                    type : json
+                    [email , password ] not null
+
+    -example of request :
+     
+                         { 
+                           "email" : "ali@xwz.rey",
+                           "password" : "112233"}
+   -response :
+              type : json
+              In success : { "token":"24NZ8sOgjXvvybj2htHb8ZbQY8pc","id": 6}  => with status code:200
+              In failure : { "message": "The given data was invalid.",
+                            "errors": {
+                                   "password": [
+                                         "The password field is required."
+                                               ]
+                                            }} => with status code:442
+
+                         :{"response" : {"This user doesn't exist"}} => with status code:200
+      
+                      working flow of this function 
+   this function is of usercontroller - first it validate request 
+                                      - then find user object
+                                      - genenrate token depends on email
+                                      - return response 
+-----------------------------------------------------------------------------------
+========================================================< all next routes will be authenticated with sanctum >===============
+          all must send header like
+                      key : Authorization
+                      value : Bearer -> keyword followed by token
+                 ***  example: 
+                            Authorization => Bearer 3|AIJDQG5vpeAhbOObdA0IH92QHLLL7v9PfnNQXrAuDnAvq7ZVAyFUmzKo7PP5CH79sKvBY2rMERuvkxpn
+==============================================================================================================================
+Postman : http://192.168.3.2:8000/api/show?id=7
+ Route::get('/show','Api\UserController@show');
+
+-This route will be used to show profile date of an exist user
+      
+
+    - method : get
+
+    - request param : id = wanted user  
+
+    -response :
+              type : json
+              In success : {
+                             "name": "sarah",
+                             "email": "shamo@gmail.com",
+                             "gender": "female",
+                             "BirthDate": "",
+                             "address": null,
+                             "interests": [
+                                          "ios",
+                                          "OS"
+                                          ],
+                              "groups": [
+                                       {
+                                        "name": "7up ya lazzez",
+                                        "id": 5
+                                        },  => with status code:200
+              In failure :{"response" : {"This user doesn't exist"}}=>with status code:200
+      
+                      working flow of this function 
+   this function is of usercontroller - find user object
+                                      - select it from database
+                                      - delect all groups of this user
+                                      - return response
+-----------------------------------------------------------------------------------------------------
+
+Postman : http://192.168.3.2:8000/api/update/7
+ Route::get('/update/{id}','Api\UserController@update');
+
+-This route will be used to update data of an exist user
+      
+
+    - method : get
+   
+    -request :  
+               - body : 
+                    type : json
+                    [name , email , password , gender , BirthDate,address , photo ] accept null
+
+    -example of request :
+     
+                         { "name" : "7assn",
+                           "email" : "7assn@xwz.rey",
+                           "password" : "112233",
+                           "gender" : "male"}
+    -response :
+              type : json
+              In success :{"response":"Updated Successfully"}=> with status code:200
+              In failure :{"response" :"This user doesn't exist"}=>with status code:200
+      
+                      working flow of this function 
+   this function is of usercontroller - check if this user exit
+                                      - select this user from database
+                                      - check updated email not duplicate
+                                      - update this user in database with given data
+                                      - return response
+----------------------------------------------------------------------------------------------------------
+
+Postman : http://192.168.3.2:8000/api/createGroup?current_user_id=2
+ Route::post('/createGroup','Api\GroupController@create');
+
+-This route will be used to sign up a new user
+      * email must be unique
+
+    - method : post
+
+    - request 
+              - head : application/json
+              - body : 
+                    type : json
+                    [name,max_member_number,duration,description,level,status,id,interest] not null
+                    [address , photo ] accept null
+    -example of request :
+     
+                         {"name":"mmmm", "description":"hello there" ,
+                           "max_member_number":5,
+                           "duration":3, "status":"free",
+                           "id":1,
+                           "interest":"ios","level":"beginner"}
+   -response :
+              type : json
+              In success : { "response" :"Group created successfully "}  => with status code:200
+              In failure : {
+                             "message": "The given data was invalid.",
+                             "errors": {
+                                   "description": [
+                                       "The description field is required."
+                                           ]
+                                          }
+                                        }} => wih status code:442
+                        :{"response":"This group name is exist"} => with status code:200
+      
+                      working flow of this function 
+   this function is of usercontroller - first it validates request 
+                                      - check if this name of group alrealy exist
+                                      - then create group object
+                                      - store it to database
+                                      - return response
+-----------------------------------------------------------------------------------------------
+//-------------------------this route to show group
+Route::get('/show/{groupid}','Api\GroupController@show');
+//-----------------------------this route to add member
+Route::get('/add/{groupid}/{id}','Api\GroupController@addMember');
+//----------------------------this route to remove member
+Route::get('/remove/{groupid}/{id}','Api\GroupController@removeMember');
+//----------------------------this route to add new task
+Route::post('/add','Api\TaskController@add');
+//------------------------------this route to add task to in-progress list
+Route::get('/progress/{id}','Api\TaskController@moveToProgress');
+//------------------------------this route to move function to done
+Route::get('/done/{id}','Api\TaskController@moveToDone');
+//-----------------------------this route to get all groups with the same interest
+Route::get('/groups/{id}','Api\InterestController@ListGroups');
+//---------------------------- this route for user to leave el group 
+Route::get('/leave/{groupid}/{id}','Api\GroupController@leave');
+//----------------------------------- this route to update group info
+Route::post('/updateGroup/{id}','Api\GroupController@updateGroup');
+{"name":"mmmm", "description":"hello there" , "max_member_number":5, "duration":3, "status":"free","id":1,"interest":"ios","level":"beginner"}
+//-------------------------then all routes with be grouped to authenticate them
+Route::get('/todo/{groupId}','Api\TaskController@listTodos');
+//-------------------------- this to get in-progress tasks of group 
+Route::get('/progresses/{groupId}','Api\TaskController@listProgress');
+//-------------------------- this to get done function of same group
+Route::get('/dones/{groupId}','Api\TaskController@listDone');
+//-------------------------- this to send request
+Route::post('/request/{groupId}/{id}','Api\GroupController@requestToJoin');
+//-------------------------- this to show all request
+Route::get('/requests/{groupId}','Api\GroupController@requests');
+//------------------------- this to accept join request
+Route::get('/accept/{requestId}','Api\UserRequestController@accept');
+//------------------------- this to reject join request
+Route::get('/reject/{requestId}','Api\UserRequestController@reject');
+//------------------------------- this route to view groups of certain user
+Route::get('/home/{id}','Api\UserController@home');
+

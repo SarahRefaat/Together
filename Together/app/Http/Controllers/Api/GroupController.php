@@ -12,9 +12,19 @@ class GroupController extends Controller
 {
     //------------------this function to create a new group
     public function create(Request $request){
+      $valid = $request->validate([
+        'name' => 'required|min:3|max:255',
+        'description' => 'required',
+        'status' => 'required',
+        'level' => 'required',
+        'duration' => 'required',
+        'max_member_number'=>'required',
+        'interest'=>'required',
+        'id'=>'required'
+    ]);
       $group=Group::where('name',$request->name)->first();
       if($group){
-        return ['response'=>'this group title is exist'];
+        return ['response'=>'This group title is exist'];
       }
       $admin=User::find($request->id);
       
@@ -57,16 +67,16 @@ class GroupController extends Controller
         $group->current_number_of_members=$group->current_number_of_members+1;
         $group->save();
         $group->users()->attach($user);
-        return ['response'=>'member added successfully'];
+        return ['response'=>'Member added successfully'];
         }
         else{
-          return ['response'=>'this group id full'];
+          return ['response'=>'This group id full'];
         }
       }
       else{
-        return ['response'=>'u aren\'t the admin'];
+        return ['response'=>'U aren\'t the admin'];
       }
-      return ['response'=>'this group doesnt exist'];
+      return ['response'=>'This group doesnt exist'];
       }
     
     
@@ -76,20 +86,13 @@ class GroupController extends Controller
         
         $group=Group::find($groupid);
         $members=$group->users;
-        $memberNames=array();
-        foreach($members as $member){
-          array_push($memberNames,User::where('email',$member->email)->first());
-        }
         if($group){
         $ret=['name'=>$group->name,
         'description'=>$group->sdescription,
         'status'=>$group->status,
         'duration'=>$group->duration,
-        'members'=>$memberNames,
+        'members'=>$members,
         'interest'=>$group->interest->name
-        // 'members'=>[
-        // foreach ($group->users as $user){
-        //   'member'=> $user->name];}
         ];
         return ['name'=>$group->name,
         'description'=>$group->sdescription,
