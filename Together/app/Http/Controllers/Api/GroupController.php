@@ -20,14 +20,14 @@ class GroupController extends Controller
       
       //$group=Group::create($request->except('id','other'));
       $group=new Group();
-      $group->admin_id=$admin->id;
-      $group->name=$request->name;
-      $group->description=$request->description;
-      $group->max_member_number=$request->max_member_number;
-      $group->duration=$request->duration;
-      $group->current_number_of_members=0;
-      $group->level=$request->level;
-      $group->status=$request->status;
+      $group->admin_id = $admin->id;
+      $group->name = $request->name;
+      $group->description = $request->description;
+      $group->max_member_number = $request->max_member_number;
+      $group->duration = $request->duration;
+      $group->current_number_of_members = 1;
+      $group->level = $request->level;
+      $group->status = $request->status;
       $interest=Interest::where('name',$request->interest)->first();
       $group->interest_id = $interest->id ;
       $group->save();
@@ -35,15 +35,27 @@ class GroupController extends Controller
       return ['response'=>'Group Created Successfully '];
       }
       //-------------------------this fuction to add member to p
-      public function addMember($groupid,$id,Request $request){
+      public static function addMember($groupid,$id,Request $request){
+       
         $adminMember=User::find($request->input('current_user_id'));
-        
+       
         $group=Group::find($groupid);
+      
         if($group){
           if($group->admin_id == $adminMember->id){
+            
         $user=User::find($id);
+        //------------ this user not in the group ??????
+        $existUsers=$group->users;
+        foreach($existUsers as $exist){
+              if($user->id==$exist->id){
+                return ['response'=>'This user already in this group'];
+              }
+        }
+        
         if($group->current_number_of_members<$group->max_member_number){
         $group->current_number_of_members=$group->current_number_of_members+1;
+        $group->save();
         $group->users()->attach($user);
         return ['response'=>'member added successfully'];
         }
@@ -99,6 +111,7 @@ class GroupController extends Controller
         $user=User::find($id);
         $group->users()->detach($user);
         $group->current_number_of_memebers=$group->current_number_of_memebers-1;
+        $group->save();
         return ['response'=>'member removed successfully'];
         }
       }
@@ -113,6 +126,7 @@ class GroupController extends Controller
         $user=User::find($id);
         $group->users()->detach($user);
         $group->current_number_of_memebers=$group->current_number_of_memebers-1;
+        $group->save();
         return ['response'=>'member leaved successfully'];
       }
       //---------------------------- this function to update group information

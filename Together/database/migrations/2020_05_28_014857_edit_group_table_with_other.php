@@ -18,7 +18,7 @@ class EditGroupTableWithOther extends Migration
         Schema::table('groups', function (Blueprint $table) {
             //
             $table->dropColumn('interest_id');
-            $table->foreignId('interest_id')->nullable();
+            //$table->foreignId('interest_id')->nullable();
         });
     }
     }

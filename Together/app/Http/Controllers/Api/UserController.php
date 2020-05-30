@@ -16,7 +16,7 @@ class UserController extends Controller
         //-----here i ckeck if this is his first account in our app
         $user=User::where('email',$request->email)->first();
         if($user){
-            return ['response'=>'this email is exist '];
+            return ['response'=>'This email is exist '];
         }
         //-------------- then if itis his first sign up
         $user=new User; 
@@ -50,11 +50,11 @@ class UserController extends Controller
         //------------- here user saved
         
         if($user){
-        return ['response'=>'Signed In Successfully'];}
+        return ['response'=>'Signed up Successfully'];}
 
         else {
 
-            return ['response'=>'plz fill all required feilds'];
+            return ['response'=>'Plz fill all required feilds'];
         }
     }
     //----------------------this function to login
@@ -95,7 +95,8 @@ class UserController extends Controller
          }
         }
         if($user){
-        return ['name'=>$user->name,
+        return [
+        'name'=>$user->name,
         'email'=>$user->email,
         'gender'=>$user->gender,
         'age'=>$user->age,
@@ -111,17 +112,27 @@ class UserController extends Controller
     public function update(Request $request,$id){
             $user=User::where('id',$id)->first();
             if($user){
-                $valid=$request->validate([]);
-                if($valid){
+                // $valid=$request->validate([]);
+                // if($valid){
             $user=User::where('id',$id)->first()->update($request->all());
             return ['response'=>'updated Successfully'];
-       }
-       else{
-           return ['response'=>'not valid'];
-       }
+    //    }
+    //    else{
+    //        return ['response'=>'not valid'];
+    //    }
     }
        else{
         return ['response'=>'this user is not exist'];               
     }
+    }
+    //------------------- this to retrive all groups of certain user
+    public function home($id){
+        $user=User::where('id',$id)->first();
+        if($user){
+            return $user->groups;
+        }
+        else{
+            return ['response'=>'This user is not exist'];  
+        }
     }
 }

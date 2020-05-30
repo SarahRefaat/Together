@@ -59,6 +59,12 @@ Route::get('/dones/{groupId}','Api\TaskController@listDone');
 Route::post('/request/{groupId}/{id}','Api\GroupController@requestToJoin');
 //-------------------------- this to show all request
 Route::get('/requests/{groupId}','Api\GroupController@requests');
+//------------------------- this to accept join request
+Route::get('/accept/{requestId}','Api\UserRequestController@accept');
+//------------------------- this to reject join request
+Route::get('/reject/{requestId}','Api\UserRequestController@reject');
+//------------------------------- this route to view groups of certain user
+Route::get('/home/{id}','Api\UserController@home');
 
 // //----------------------sanctum generate token for user 
 // Route::post('/sanctum/token', function (Request $request) {
