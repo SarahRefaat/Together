@@ -28,7 +28,7 @@ Route::post('/signin','Api\UserController@signin');
 //-------------------------------this route to view user profile
 Route::get('/show','Api\UserController@show')->middleware('auth:sanctum');
 //-----------------------------------this to update profile
-Route::get('/update/{id}','Api\UserController@update')->middleware('auth:sanctum');
+Route::post('/update/{id}','Api\UserController@update')->middleware('auth:sanctum');
 //-------------------------this route to create group
 Route::post('/createGroup','Api\GroupController@create')->middleware('auth:sanctum');
 //-------------------------this route to show group
