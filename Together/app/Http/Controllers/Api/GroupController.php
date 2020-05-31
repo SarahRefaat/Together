@@ -42,7 +42,7 @@ class GroupController extends Controller
       $group->interest_id = $interest->id ;
       $group->save();
       $group->users()->attach($admin);
-      return ['response'=>'Group Created Successfully '];
+      return ['response'=>'Group Created Successfully'];
       }
       //-------------------------this fuction to add member to p
       public static function addMember($groupid,$id,Request $request){
@@ -163,5 +163,6 @@ class GroupController extends Controller
         $request->save();
         return ['response'=>'Request sent successfully wait for admin to accept it'];
     }
+    
       
 }

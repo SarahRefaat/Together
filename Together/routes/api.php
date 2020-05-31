@@ -64,7 +64,7 @@ Route::get('/accept/{requestId}','Api\UserRequestController@accept')->middleware
 //------------------------- this to reject join request
 Route::get('/reject/{requestId}','Api\UserRequestController@reject')->middleware('auth:sanctum');
 //------------------------------- this route to view groups of certain user
-Route::get('/home/{id}','Api\UserController@home');
+Route::get('/home/{id}','Api\UserController@home')->middleware('auth:sanctum');
 
 // //----------------------sanctum generate token for user 
 // Route::post('/sanctum/token', function (Request $request) {

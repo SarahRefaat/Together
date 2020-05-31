@@ -143,4 +143,19 @@ class UserController extends Controller
             return ['response'=>'This user is not exist'];  
         }
     }
+    //---------------------------- this function to update interests of user
+    public function updateInterests(Request $request,$id){
+        $user=User::find($id);
+        if($user){
+            $interestArr=array();
+             $listOfInterests=$request->interests;
+              foreach($listOfInterests as $interest){
+                 array_push($interestArr,Interest::where('name',$interest)->first()->id);
+                 }
+                 $user->interests()->attach($interestArr);
+                 $user->save(); 
+                 return ['response'=>'Interests changed successfully'];
+        }
+        return ['response'=>'This user is not exist'];  
+      }
 }
