@@ -65,6 +65,8 @@ Route::get('/accept/{requestId}','Api\UserRequestController@accept')->middleware
 Route::get('/reject/{requestId}','Api\UserRequestController@reject')->middleware('auth:sanctum');
 //------------------------------- this route to view groups of certain user
 Route::get('/home/{id}','Api\UserController@home')->middleware('auth:sanctum');
+//------------------------------ this route to update only interests
+Route::post('/updateInterests/{id}','Api\UserController@updateInterests');
 
 // //----------------------sanctum generate token for user 
 // Route::post('/sanctum/token', function (Request $request) {
