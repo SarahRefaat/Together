@@ -17,4 +17,8 @@ class InterestController extends Controller
     }
     //-------------------this function to add new interes
     // if that is okay with 7ossam just copy it from ur file (interestdes);
+    //-------------------- here u can get all interests
+    public function interests(Request $request){
+      return Interest::all();
+    }
 }
