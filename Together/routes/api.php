@@ -42,7 +42,7 @@ Route::post('/add','Api\TaskController@add')->middleware('auth:sanctum');
 //------------------------------this route to add task to in-progress list
 Route::get('/progress/{id}','Api\TaskController@moveToProgress')->middleware('auth:sanctum');
 //-----------------------------------this route to get all intersts
-Route::get('/interests','Api\InterestController@interests');
+Route::get('/interests','Api\InterestController@interests')->middleware('auth:sanctum');
 //------------------------------this route to move function to done
 Route::get('/done/{id}','Api\TaskController@moveToDone')->middleware('auth:sanctum');
 //-----------------------------this route to get all groups with the same interest
@@ -68,7 +68,7 @@ Route::get('/reject/{requestId}','Api\UserRequestController@reject')->middleware
 //------------------------------- this route to view groups of certain user
 Route::get('/home/{id}','Api\UserController@home')->middleware('auth:sanctum');
 //------------------------------ this route to update only interests
-Route::post('/updateInterests/{id}','Api\UserController@updateInterests');
+Route::post('/updateInterests/{id}','Api\UserController@updateInterests')->middleware('auth:sanctum');
 
 // //----------------------sanctum generate token for user 
 // Route::post('/sanctum/token', function (Request $request) {

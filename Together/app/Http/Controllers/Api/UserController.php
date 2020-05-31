@@ -49,7 +49,7 @@ class UserController extends Controller
         //--------------------here if user has other interests allah y5rb bytooo
         $user->name = $request->name;
         $user->email=$request->email;
-        $user->password= $request->password;
+        $user->fill(['password' => encrypt($request->password)]);
         $user->BirthDate =$request->BirthDate;
         $user->gender = $request->gender;
         $user->address=$request->address;
@@ -113,6 +113,7 @@ class UserController extends Controller
         'name'=>$user->name,
         'email'=>$user->email,
         'gender'=>$user->gender,
+        'password'=>decrypt($user->password),
         'BirthDate'=>$user->BirthDate,
         'address'=>$user->address,
         'interests'=>$userInterests,

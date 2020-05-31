@@ -20,9 +20,9 @@ class TaskController extends Controller
         }
     }
     else{
-        return ['response'=>'u aren\'t the admin'];
+        return ['response'=>'U aren\'t the admin'];
     }
-        return ['response'=>'error with params leeh ha leeh'];
+        return ['response'=>'Error with params leeh ha leeh'];
     }
     //----------------------this function to move from to do to progress
     public function moveToProgress($id){
@@ -31,7 +31,7 @@ class TaskController extends Controller
             $task->update(array('status'=>'in-progress'));
             return ['response'=>'sucess'];
         }
-        return ['response'=>'this task not exist'];
+        return ['response'=>'This task not exist'];
     }
     //---------------------------this function to move from in-progress to done
     public function moveToDone($id){
@@ -40,7 +40,7 @@ class TaskController extends Controller
             $task->update(array('status'=>'done'));
             return ['response'=>'sucess'];
         }
-        return ['response'=>'this task not exist'];
+        return ['response'=>'This task not exist'];
     }
     //---------------------------- this to get to do list of tasks of specific group
     public function listTodos($groupId){
@@ -55,7 +55,7 @@ class TaskController extends Controller
             }
             return $tasksList;
         }
-        return ['response'=>'this group not exist'];
+        return ['response'=>'This group not exist'];
     }
     //---------------------------- this to get in progress tasks
     public function listProgress($groupId){
