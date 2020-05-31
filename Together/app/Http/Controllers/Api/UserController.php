@@ -152,7 +152,7 @@ class UserController extends Controller
               foreach($listOfInterests as $interest){
                  array_push($interestArr,Interest::where('name',$interest)->first()->id);
                  }
-                 $user->interests()->attach($interestArr);
+                 $user->interests()->sync($interestArr);
                  $user->save(); 
                  return ['response'=>'Interests changed successfully'];
         }
