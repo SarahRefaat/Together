@@ -98,7 +98,7 @@ class GroupController extends Controller
         'description'=>$group->sdescription,
         'status'=>$group->status,
         'duration'=>$group->duration,
-        'members'=>$memberNames,
+        'members'=>$members,
         'interest'=>$group->interest->name];
         }
         else{
