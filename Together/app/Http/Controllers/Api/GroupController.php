@@ -136,7 +136,7 @@ class GroupController extends Controller
       public function updateGroup(Request $request,$groupId){
         $adminMember=User::find($request->input('current_user_id'));
           $group=Group::find($groupId);
-          if($group->admin_id==$adminMember->id){
+          if($group->admin_id == $adminMember->id){
           $group->update($request->all());
           if($group){
             return ['response'=>'updated successfully'];

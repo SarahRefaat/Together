@@ -33,6 +33,16 @@ class TaskController extends Controller
         }
         return ['response'=>'This task not exist'];
     }
+    //----------------------this function to move from to do to progress
+    public function moveTodo($id){
+        $task=Task::find($id);
+        if($task){
+            $task->update(array('status'=>'to do'));
+            return ['response'=>'Moved successfully'];
+        }
+        return ['response'=>'This task not exist'];
+    }
+
     //---------------------------this function to move from in-progress to done
     public function moveToDone($id){
         $task=Task::find($id);
@@ -87,5 +97,19 @@ class TaskController extends Controller
         }
         return ['response'=>'this group not exist'];
     }
- 
+   //--------------------------- this function to update exist task
+   public function updateTask(Request $request,$id){
+    $task=Task::find($id);
+    if($task){
+        $task->update($request->all());
+        return ['response'=>'Updated successfully'];
+    }
+    return ['response'=>'This task not exist'];
+   }
+   //---------------------- this to delete certain task 
+   public function deleteTask($id){
+       $task=Task::find($id);
+       $task->delete();
+       return ['response'=>'This task deleted successfully'];
+   }
 }
