@@ -129,7 +129,14 @@ class UserController extends Controller
     public function update(Request $request,$id){
             $user=User::where('id',$id)->first();
             if($user){
-            $user=User::where('id',$id)->first()->update($request->all());
+            //$user=User::where('id',$id)->first()->update($request->all());
+            $user->name = $request->name;
+            $user->email=$request->email;
+            $user->fill(['password' => encrypt($request->password)]);
+            $user->BirthDate =$request->BirthDate;
+            $user->gender = $request->gender;
+            $user->address=$request->address;
+            $user->update();
             return ['response'=>'Updated Successfully'];
     }
        else{

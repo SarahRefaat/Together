@@ -42,7 +42,7 @@ Route::post('/add','Api\TaskController@add')->middleware('auth:sanctum');
 //------------------------------this route to add task to in-progress list
 Route::get('/progress/{id}','Api\TaskController@moveToProgress')->middleware('auth:sanctum');
 //-----------------------------------this route to get all intersts
-Route::get('/interests','Api\InterestController@interests')->middleware('auth:sanctum');
+Route::get('/interests','Api\InterestController@interests');
 //------------------------------this route to move function to done
 Route::get('/done/{id}','Api\TaskController@moveToDone')->middleware('auth:sanctum');
 //-----------------------------this route to get all groups with the same interest
