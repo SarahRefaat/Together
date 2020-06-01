@@ -38,6 +38,7 @@ class GroupController extends Controller
       $group->current_number_of_members = 1;
       $group->level = $request->level;
       $group->status = $request->status;
+      $group->photo=$request->photo;
       $interest=Interest::where('name',$request->interest)->first();
       $group->interest_id = $interest->id ;
       $group->save();
@@ -87,33 +88,30 @@ class GroupController extends Controller
         $group=Group::find($groupid);
         $members=$group->users;
         if($group){
-        $ret=['name'=>$group->name,
-        'description'=>$group->sdescription,
-        'status'=>$group->status,
-        'duration'=>$group->duration,
-        'members'=>$members,
-        'interest'=>$group->interest->name
-        ];
         return ['name'=>$group->name,
         'description'=>$group->sdescription,
         'status'=>$group->status,
         'duration'=>$group->duration,
         'members'=>$members,
-        'interest'=>$group->interest->name];
+        'interest'=>$group->interest->name,
+        'photo'=>$group->photo];
         }
         else{
           return ['response'=>'this group id not exist'];
         }
       }
       //---------------------this function to remove member from group
-      public function removeMember($groupid,$id){
+      public function removeMember($groupid,$id,Request $request){
         $adminMember=User::find($request->input('current_user_id'));
         $group=Group::find($groupid);
         if($group){
           if($group->admin_id==$adminMember->id){
         $user=User::find($id);
         $group->users()->detach($user);
-        $group->current_number_of_memebers=$group->current_number_of_memebers-1;
+        $group->current_number_of_members=$group->current_number_of_memebers-1;
+        if($group->current_number_of_members < 0){
+          $group->current_number_of_members=0; 
+        }
         $group->save();
         return ['response'=>'member removed successfully'];
         }

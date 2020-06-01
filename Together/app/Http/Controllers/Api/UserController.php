@@ -31,13 +31,13 @@ class UserController extends Controller
         //-------------- then if itis his first sign up
         $user=new User; 
         // -------------------here if pic is attached
-        if($request->file('photo')){
-            $image=$request->photo;
-            $destinationPath = 'images/'; // upload path
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
-            $user->photo = $profileImage;   
-        }
+        // if($request->file('photo')){
+        //     $image=$request->photo;
+        //     $destinationPath = 'images/'; // upload path
+        //     $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+        //     $image->move($destinationPath, $profileImage);
+        //     $user->photo = $profileImage;   
+        // }
         // ------------her to attach his intrests
         $interestArr=array();
         if($request->interests){
@@ -54,13 +54,16 @@ class UserController extends Controller
         $user->BirthDate =$request->BirthDate;
         $user->gender = $request->gender;
         $user->address=$request->address;
+        $user->photo=$request->photo;
         $user->save();
         //---------here i attach el inteerests
         $user->interests()->attach($interestArr);
         //------------- here user saved
         
         if($user){
-        return ['response'=>'Signed up Successfully'];}
+       // return ['response'=>'Signed up Successfully'];
+          
+         }
 
         else {
 
