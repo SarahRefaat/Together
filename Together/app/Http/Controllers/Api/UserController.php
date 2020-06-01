@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 use App\User;
 use App\Interest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\HasApiTokens;
 use App\Http\Controllers\Controller;
@@ -77,8 +78,9 @@ class UserController extends Controller
          
          if($user){
             //return $user->email;
-             $user=User::where('password',$request->password)->first();
-             if($user){
+           //  $user=User::where('password',$request->password)->first();
+           $pasword=Crypt::decrypt($user->password);
+             if($request->password == $pasword){
                 $token=$user->createToken($request->email)->plainTextToken;
                  return ['token' => $token,'id'=>$user->id];
              }
