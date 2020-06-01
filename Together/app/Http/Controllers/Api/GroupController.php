@@ -135,7 +135,7 @@ class GroupController extends Controller
         $adminMember=User::find($request->input('current_user_id'));
           $group=Group::find($groupId);
           if($group->admin_id == $adminMember->id){
-          $group->update($request->all());
+          $group->update($request->only('name','description','address','photo','duration'));
           if($group){
             return ['response'=>'updated successfully'];
           }
