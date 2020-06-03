@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+use App\Http\Resources\GroupResource;
 use App\Group;
 use App\User;
 use App\Interest;
 use App\UserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 
 class GroupController extends Controller
 {
@@ -27,7 +29,7 @@ class GroupController extends Controller
         return ['response'=>'This group title is exist'];
       }
       $admin=User::find($request->id);
-      
+
       //$group=Group::create($request->except('id','other'));
       $group=new Group();
       $group->admin_id = $admin->id;
@@ -47,14 +49,14 @@ class GroupController extends Controller
       }
       //-------------------------this fuction to add member to p
       public static function addMember($groupid,$id,Request $request){
-       
+
         $adminMember=User::find($request->input('current_user_id'));
-       
+
         $group=Group::find($groupid);
-      
+
         if($group){
           if($group->admin_id == $adminMember->id){
-            
+
         $user=User::find($id);
         //------------ this user not in the group ??????
         $existUsers=$group->users;
@@ -63,7 +65,7 @@ class GroupController extends Controller
                 return ['response'=>'This user already in this group'];
               }
         }
-        
+
         if($group->current_number_of_members<$group->max_member_number){
         $group->current_number_of_members=$group->current_number_of_members+1;
         $group->save();
@@ -79,12 +81,12 @@ class GroupController extends Controller
       }
       return ['response'=>'This group doesnt exist'];
       }
-    
-    
+
+
   }
       //--------------------this function to get this group info
       public function show($groupid){
-        
+
         $group=Group::find($groupid);
         $members=$group->users;
         if($group){
@@ -110,7 +112,7 @@ class GroupController extends Controller
         $group->users()->detach($user);
         $group->current_number_of_members=$group->current_number_of_memebers-1;
         if($group->current_number_of_members < 0){
-          $group->current_number_of_members=0; 
+          $group->current_number_of_members=0;
         }
         $group->save();
         return ['response'=>'member removed successfully'];
@@ -161,6 +163,12 @@ class GroupController extends Controller
         $request->save();
         return ['response'=>'Request sent successfully wait for admin to accept it'];
     }
-    
-      
+    // this function for user to search for a group by keyword
+    public function search(){
+        $searchKeyword = request()->query('q');
+        $groups = Group::where('name', 'like', "%{$searchKeyword}%")->get();
+        $groupResource = GroupResource::collection($groups);
+        return $groupResource;
+    }
+
 }
