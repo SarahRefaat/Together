@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 //--------------------------this route for user to sign up
 Route::post('/signup','Api\UserController@signup');
-//----------------------------this route for user to sign in 
+//----------------------------this route for user to sign in
 Route::post('/signin','Api\UserController@signin');
 //-------------------------------this route to view user profile
 Route::get('/show','Api\UserController@show')->middleware('auth:sanctum');
@@ -41,19 +41,15 @@ Route::get('/remove/{groupid}/{id}','Api\GroupController@removeMember')->middlew
 Route::post('/add','Api\TaskController@add')->middleware('auth:sanctum');
 //------------------------------this route to add task to in-progress list
 Route::get('/progress/{id}','Api\TaskController@moveToProgress')->middleware('auth:sanctum');
-//-----------------------------------this route to get all intersts
-Route::get('/interests','Api\InterestController@interests');
 //------------------------------this route to move function to done
 Route::get('/done/{id}','Api\TaskController@moveToDone')->middleware('auth:sanctum');
-//-----------------------------this route to get all groups with the same interest
-Route::get('/groups/{id}','Api\InterestController@ListGroups');
-//---------------------------- this route for user to leave el group 
+//---------------------------- this route for user to leave el group
 Route::get('/leave/{groupid}/{id}','Api\GroupController@leave')->middleware('auth:sanctum');
 //----------------------------------- this route to update group info
 Route::post('/updateGroup/{id}','Api\GroupController@updateGroup')->middleware('auth:sanctum');
 //-------------------------then all routes with be grouped to authenticate them
 Route::get('/todo/{groupId}','Api\TaskController@listTodos')->middleware('auth:sanctum');
-//-------------------------- this to get in-progress tasks of group 
+//-------------------------- this to get in-progress tasks of group
 Route::get('/progresses/{groupId}','Api\TaskController@listProgress')->middleware('auth:sanctum');
 //-------------------------- this to get done function of same group
 Route::get('/dones/{groupId}','Api\TaskController@listDone')->middleware('auth:sanctum');
@@ -76,8 +72,18 @@ Route::post('/updateTask/{id}','Api\TaskController@updateTask');
 //------------------------ this route to move task to do list
 Route::get('/do/{id}','Api\TaskController@moveTodo');
 
+//...................................................... nahla - routes
+//this route display all interests
+Route::get('/interests', 'API\InterestController@index')->middleware('auth:sanctum');
+//this route display single interest
+Route::get('/interests/{interest}', 'API\InterestController@show')->middleware('auth:sanctum');
+//this route display groups of single interest
+Route::get('/interests/{interest}/groups', 'API\InterestController@groups')->middleware('auth:sanctum');
+//this route to search for group by search keyword
+Route::get('/groups/search', 'API\GroupController@search')->middleware('auth:sanctum');
 
-// //----------------------sanctum generate token for user 
+
+// //----------------------sanctum generate token for user
 // Route::post('/sanctum/token', function (Request $request) {
 //     $request->validate([
 //         'email' => 'required|email',
