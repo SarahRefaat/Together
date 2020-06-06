@@ -20,14 +20,27 @@ class InterestController extends Controller
     public function  show(){
         $interestId = request()->interest;
         $interest = Interest::find($interestId);
+        if($interest){
         return new InterestResource($interest);
+        }else{
+            return ["response"=>"This interest does not exist !!.."];
+        }
     }
     //this function to display groups of single interest
     public function  groups(){
         $interestId = request()->interest;
         $interest = Interest::find($interestId);
+        if($interest){
         $groups =  $interest->groups;
+        if($groups){
         $groupResource = GroupResource::collection($groups);
         return $groupResource;
+        }else{
+            return ["response"=>"There is no avaliable groups in this interest .."];
+        }
+        }
+        else{
+            return ["response"=>"This interest does not exist !!.."];
+        }
     }
 }

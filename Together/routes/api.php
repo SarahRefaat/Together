@@ -90,7 +90,7 @@ Route::get('/users/{user_id}/notifications', 'API\UserController@notifications')
 //this route display single notification by id
 Route::get('/notifications/show/{id}', 'API\NotificationController@show')->middleware('auth:sanctum');
 //this route get only the recent notifications (last 10)
-Route::get('users/{user_id}/notifications/recent', 'API\UserController@recentNotifications')->middleware('auth:sanctum');
+//Route::get('users/{user_id}/notifications/recent', 'API\UserController@recentNotifications')->middleware('auth:sanctum');
 //this route to update the user to enable notifications
 Route::post('/users/{user_id}/enable', 'API\UserController@enable')->middleware('auth:sanctum');
 //this route to update user to disable notifications

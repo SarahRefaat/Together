@@ -27,6 +27,7 @@ return array(
     'App\\Http\\Resources\\GroupResource' => $baseDir . '/app/Http/Resources/GroupResource.php',
     'App\\Http\\Resources\\InterestResource' => $baseDir . '/app/Http/Resources/InterestResource.php',
     'App\\Interest' => $baseDir . '/app/Interest.php',
+    'App\\Notification' => $baseDir . '/app/Notification.php',
     'App\\Other' => $baseDir . '/app/Other.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',

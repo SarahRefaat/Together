@@ -167,8 +167,14 @@ class GroupController extends Controller
     public function search(){
         $searchKeyword = request()->query('q');
         $groups = Group::where('name', 'like', "%{$searchKeyword}%")->get();
-        $groupResource = GroupResource::collection($groups);
-        return $groupResource;
+        if ($groups) {
+            $groupResource = GroupResource::collection($groups);
+            return $groupResource;
+        }
+        else{
+            return ["response"=>"No results found !, Try Different Keywords "];
+        }
+
     }
 
 }

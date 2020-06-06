@@ -481,6 +481,7 @@ class ComposerStaticInitba16cdc42cd717ebf4d1aea123878e4b
         'App\\Http\\Resources\\GroupResource' => __DIR__ . '/../..' . '/app/Http/Resources/GroupResource.php',
         'App\\Http\\Resources\\InterestResource' => __DIR__ . '/../..' . '/app/Http/Resources/InterestResource.php',
         'App\\Interest' => __DIR__ . '/../..' . '/app/Interest.php',
+        'App\\Notification' => __DIR__ . '/../..' . '/app/Notification.php',
         'App\\Other' => __DIR__ . '/../..' . '/app/Other.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
