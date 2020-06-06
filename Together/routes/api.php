@@ -86,15 +86,15 @@ Route::get('/groups/search', 'API\GroupController@search')->middleware('auth:san
 
 //notifications routes
 //this route get all user notifications
-Route::get('/notifications/{user_id}', 'API\NotificationController@index')->middleware('auth:sanctum');
+Route::get('/users/{user_id}/notifications', 'API\UserController@notifications')->middleware('auth:sanctum');
 //this route display single notification by id
 Route::get('/notifications/show/{id}', 'API\NotificationController@show')->middleware('auth:sanctum');
 //this route get only the recent notifications (last 10)
-Route::get('/notifications/recent', 'API\NotificationController@recent')->middleware('auth:sanctum');
+Route::get('users/{user_id}/notifications/recent', 'API\UserController@recentNotifications')->middleware('auth:sanctum');
 //this route to update the user to enable notifications
-Route::post('/users/enable', 'API\UserController@enable')->middleware('auth:sanctum');
+Route::post('/users/{user_id}/enable', 'API\UserController@enable')->middleware('auth:sanctum');
 //this route to update user to disable notifications
-Route::post('/users/disable', 'API\UserController@disable')->middleware('auth:sanctum');
+Route::post('/users/{user_id}/disable', 'API\UserController@disable')->middleware('auth:sanctum');
 //thos route to delete single notification by id
 Route::delete('/notifications/{id}', 'API\NotificationController@destroy')->middleware('auth:sanctum');
 
