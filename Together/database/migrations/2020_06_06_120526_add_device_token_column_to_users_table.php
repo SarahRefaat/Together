@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddInterestIdToGroupTable extends Migration
+class AddDeviceTokenColumnToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddInterestIdToGroupTable extends Migration
      */
     public function up()
     {
-        Schema::table('groups', function (Blueprint $table) {
-            $table->unsignedBigInteger('interest_id');
-            $table->foreign('interest_id')->references('id')->on('interests');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('device_token');
         });
     }
 
@@ -26,7 +25,7 @@ class AddInterestIdToGroupTable extends Migration
      */
     public function down()
     {
-        Schema::table('groups', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

@@ -73,6 +73,8 @@ Route::post('/updateTask/{id}','Api\TaskController@updateTask');
 Route::get('/do/{id}','Api\TaskController@moveTodo');
 
 //...................................................... nahla - routes
+
+//interests and groups routes
 //this route display all interests
 Route::get('/interests', 'API\InterestController@index')->middleware('auth:sanctum');
 //this route display single interest
@@ -81,6 +83,20 @@ Route::get('/interests/{interest}', 'API\InterestController@show')->middleware('
 Route::get('/interests/{interest}/groups', 'API\InterestController@groups')->middleware('auth:sanctum');
 //this route to search for group by search keyword
 Route::get('/groups/search', 'API\GroupController@search')->middleware('auth:sanctum');
+
+//notifications routes
+//this route get all user notifications
+Route::get('/users/{user_id}/notifications', 'API\UserController@notifications')->middleware('auth:sanctum');
+//this route display single notification by id
+Route::get('/notifications/show/{id}', 'API\NotificationController@show')->middleware('auth:sanctum');
+//this route get only the recent notifications (last 10)
+//Route::get('users/{user_id}/notifications/recent', 'API\UserController@recentNotifications')->middleware('auth:sanctum');
+//this route to update the user to enable notifications
+Route::post('/users/{user_id}/enable', 'API\UserController@enable')->middleware('auth:sanctum');
+//this route to update user to disable notifications
+Route::post('/users/{user_id}/disable', 'API\UserController@disable')->middleware('auth:sanctum');
+//thos route to delete single notification by id
+Route::delete('/notifications/{id}', 'API\NotificationController@destroy')->middleware('auth:sanctum');
 
 
 // //----------------------sanctum generate token for user
