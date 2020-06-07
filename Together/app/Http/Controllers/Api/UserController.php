@@ -141,6 +141,7 @@ class UserController extends Controller
             $user->fill(['password' => encrypt($request->password)]);
             $user->BirthDate =$request->BirthDate;
             $user->gender = $request->gender;
+            $user->photo= $request->photo;
             $user->address=$request->address;
             $user->update();
             return ['response'=>'Updated Successfully'];
@@ -152,6 +153,7 @@ class UserController extends Controller
     //------------------- this to retrive all groups of certain user
     public function home($id){
         $groups=array();
+        $user=User::find($id);
         if($user){
             $user_group=$user->groups;
             foreach($user_groups as $group){
