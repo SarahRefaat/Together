@@ -92,6 +92,8 @@ class GroupController extends Controller
         if($group){
         return ['name'=>$group->name,
         'description'=>$group->sdescription,
+        'group_id'=>$group->id,
+        'id'=>$group->admin_id,
         'status'=>$group->status,
         'duration'=>$group->duration,
         'members'=>$members,
