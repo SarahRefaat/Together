@@ -32,9 +32,9 @@ class InterestController extends Controller
         $interest = Interest::find($interestId);
         if($interest){
         $groups =  $interest->groups;
-        if($groups){
+        if(count($groups)>0){
         $groupResource = GroupResource::collection($groups);
-        return $groupResource;
+        return ["response"=>$groupResource];
         }else{
             return ["response"=>"There is no avaliable groups in this interest .."];
         }
