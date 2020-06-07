@@ -160,4 +160,14 @@ class TaskController extends Controller
     }
     return ['response'=>'All tasks moved successfully'];
 }
+ //---------------------- this to calcutate progress of certain group
+ public function getpercentage($groupId){
+    $group=Group::find($groupId);
+    if($group){
+        $noOfDoneTasks=count(Task::select('*')->where('group_id',$group->id)->where('status','done')->get());
+        $noOfAllTasks=count($group->tasks);
+        return ['response'=>($noOfDoneTasks/$noOfAllTasks)*100];
+    }
+    return ['response'=>'this group doesnt exist'];
+}
 }

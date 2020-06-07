@@ -82,7 +82,9 @@ Route::get('/logout/{id}','Api\UserController@logout')->middleware('auth:sanctum
 //--------------------- this to know status of certain user according to certain group
 Route::get('/status/{groupId}/{id}','Api\UserController@getStatus')->middleware('auth:sanctum');
 //--------------------- this to dragADrop
-Route::post('/dragAdrop','Api\TaskController@dragAdrop');
+Route::post('/dragAdrop','Api\TaskController@dragAdrop')->middleware('auth:sanctum');
+//----------------------------------- this to get percentage
+Route::get('/getpercentage/{groupId}','Api\TaskController@getpercentage')->middleware('auth:sanctum');
 //...................................................... nahla - routes
 
 //interests and groups routes
