@@ -77,7 +77,10 @@ Route::get('/changeTodoPosition/{taskId}/{position}','Api\TaskController@changeD
 Route::get('/changeProgressPosition/{taskId}/{position}','Api\TaskController@changeProgressPosition');
 //-------------------this to  changeDonePosition tasks
 Route::get('/changeDonePosition/{taskId}/{position}','Api\TaskController@changeDonePosition');
-
+//------------------------ this route to logout
+Route::get('/logout/{id}','Api\UserController@logout')->middleware('auth:sanctum');
+//--------------------- this to know status of certain user according to certain group
+Route::get('/status/{groupId}/{id}','Api\UserController@getStatus')->middleware('auth:sanctum');
 
 //...................................................... nahla - routes
 
