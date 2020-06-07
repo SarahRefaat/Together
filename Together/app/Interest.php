@@ -13,6 +13,6 @@ class Interest extends Model
     }
     //get the groups of single interest
     public function groups(){
-        return $this->hasMany(Group::class);
+        return $this->hasMany('App\Group');
     }
 }
