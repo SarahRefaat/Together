@@ -174,6 +174,20 @@ class UserController extends Controller
         }
         return ['response'=>'This user is not exist'];
       }
+        //---------------------------- this function used to logout
+        public function logout($id){
+            $user=User::find($id);
+            if($user){
+               //Auth::logout();
+               $tokens=PersonalAccessToken::where('name',$user->email)->get();
+               foreach($tokens as $token){
+                 $token->delete();
+               }
+               
+               return ['response'=>'logout successfully'];
+            }
+ 
+        }
 
       //this function to return user notification -- nahla
       public function notifications(){
