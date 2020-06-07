@@ -206,5 +206,16 @@ class UserController extends Controller
         return ["response"=>"User Does not exist !!"];
     }
     }
+    public function updateDeviceToken(){
+        $userId = request()->user_id;
+        $user = User::find($userId);
+        if($user){
+        $user->update(['device_token'=>request()->token]);
+        return ['response'=>'device token update successfully'];
+    }else{
+        return ["response"=>"User Does not exist !!"];
+    }
+
+    }
 
 }

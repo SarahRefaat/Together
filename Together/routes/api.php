@@ -92,12 +92,14 @@ Route::get('/notifications/show/{id}', 'API\NotificationController@show')->middl
 //this route get only the recent notifications (last 10)
 //Route::get('users/{user_id}/notifications/recent', 'API\UserController@recentNotifications')->middleware('auth:sanctum');
 //this route to update the user to enable notifications
-Route::post('/users/{user_id}/enable', 'API\UserController@enable')->middleware('auth:sanctum');
+Route::put('/users/{user_id}/enable', 'API\UserController@enable')->middleware('auth:sanctum');
 //this route to update user to disable notifications
-Route::post('/users/{user_id}/disable', 'API\UserController@disable')->middleware('auth:sanctum');
-//thos route to delete single notification by id
+Route::put('/users/{user_id}/disable', 'API\UserController@disable')->middleware('auth:sanctum');
+//this route to delete single notification by id
 Route::delete('/notifications/{id}', 'API\NotificationController@destroy')->middleware('auth:sanctum');
 
+//this route to update the device token of the user once recieved
+Route::post('/users/{user_id}/devicetoken','API\UserController@updateDeviceToken')->middleware('auth:sanctum');
 
 // //----------------------sanctum generate token for user
 // Route::post('/sanctum/token', function (Request $request) {
