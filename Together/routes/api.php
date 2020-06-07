@@ -63,7 +63,7 @@ Route::post('/request/{groupId}/{id}','Api\GroupController@requestToJoin')->midd
 Route::get('/requests/{groupId}','Api\GroupController@requests')->middleware('auth:sanctum');
 //------------------------- this to accept join request
 Route::get('/accept/{requestId}','Api\UserRequestController@accept')->middleware('auth:sanctum');
-//------------------------- this to reject join request
+//------------------------- this to reject join requestp
 Route::get('/reject/{requestId}','Api\UserRequestController@reject')->middleware('auth:sanctum');
 //------------------------------- this route to view groups of certain user
 Route::get('/home/{id}','Api\UserController@home')->middleware('auth:sanctum');

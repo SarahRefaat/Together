@@ -122,6 +122,7 @@ class UserController extends Controller
         'name'=>$user->name,
         'email'=>$user->email,
         'gender'=>$user->gender,
+        'photo'=>$user->photo,
         'password'=>decrypt($user->password),
         'BirthDate'=>$user->BirthDate,
         'address'=>$user->address,
@@ -156,7 +157,7 @@ class UserController extends Controller
         $groups=array();
         $user=User::find($id);
         if($user){
-            $user_group=$user->groups;
+            $user_groups=$user->groups;
             foreach($user_groups as $group){
                 $obj=['group_id'=>$group->id,
                       'address'=>$group->address,
