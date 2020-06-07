@@ -150,4 +150,14 @@ class TaskController extends Controller
     }
         return ['response'=>'This task didnt move correctly'];   
    }
+   //--------------------this function to update position
+   public function dragAdrop(Request $request){
+    $tasks=$request->tasks;
+    foreach($tasks as $task){
+        $updatedTask=Task::find($task["id"]);
+        $updatedTask->position=$task["position"];
+        $updatedTask->save();
+    }
+    return ['response'=>'All tasks moved successfully'];
+}
 }
