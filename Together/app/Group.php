@@ -26,6 +26,6 @@ class Group extends Model
     
     //to get the interest of specific group
     public function interest(){
-        return $this->belognsTo(Interest::class);
+        return $this->belognsTo('App\Interest');
     }
 }
