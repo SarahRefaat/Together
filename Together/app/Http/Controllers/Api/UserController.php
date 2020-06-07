@@ -222,9 +222,6 @@ class UserController extends Controller
       public function requests(){
         $userId = request()->user_id;
         //$user = User::find($userId);
-        //$notifications = $user->notifications()->paginate(10);
-       // $notificationResource = NotificationResource::collection($notifications);
-          //return $notificationResource;
           return 0;
       }
 
