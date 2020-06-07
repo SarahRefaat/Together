@@ -24,7 +24,6 @@ class CreateGroupsTable extends Migration
             $table->integer('current_number_of_members');
             $table->string('status');
             $table->string('level');
-            $table->foreignId('interest_id');
             $table->timestamps();
         });
     }

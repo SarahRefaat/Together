@@ -9,10 +9,12 @@ use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\HasApiTokens;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Resources\NotificationResource;
+use App\Notification;
 
 class UserController extends Controller
 {
-    //-------------------this function to sign up 
+    //-------------------this function to sign up
     public function signup(Request $request){
         //----------- this to vslidate request
         $valid = $request->validate([
@@ -29,14 +31,14 @@ class UserController extends Controller
             return ['response'=>'This email is exist '];
         }
         //-------------- then if itis his first sign up
-        $user=new User; 
+        $user=new User;
         // -------------------here if pic is attached
         // if($request->file('photo')){
         //     $image=$request->photo;
         //     $destinationPath = 'images/'; // upload path
         //     $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
         //     $image->move($destinationPath, $profileImage);
-        //     $user->photo = $profileImage;   
+        //     $user->photo = $profileImage;
         // }
         // ------------her to attach his intrests
         $interestArr=array();
@@ -46,7 +48,7 @@ class UserController extends Controller
              array_push($interestArr,Interest::where('name',$interest)->first()->id);
              }
             }
-           
+
         //--------------------here if user has other interests allah y5rb bytooo
         $user->name = $request->name;
         $user->email=$request->email;
@@ -59,7 +61,7 @@ class UserController extends Controller
         //---------here i attach el inteerests
         $user->interests()->attach($interestArr);
         //------------- here user saved
-        
+
         if($user){
        // return ['response'=>'Signed up Successfully'];
           $response=$this->signin($request);
@@ -68,7 +70,7 @@ class UserController extends Controller
 
         else {
 
-            return ['response'=>'Plz fill all required feilds'];
+            return ['response'=>'Please fill all required feilds'];
         }
     }
 }
@@ -79,7 +81,7 @@ class UserController extends Controller
             'password' => 'required',
         ]);
          $user=User::where('email',$request->email)->first();
-         
+
          if($user){
             //return $user->email;
            //  $user=User::where('password',$request->password)->first();
@@ -144,7 +146,7 @@ class UserController extends Controller
             return ['response'=>'Updated Successfully'];
     }
        else{
-        return ['response'=>'This user is not exist'];               
+        return ['response'=>'This user is not exist'];
     }
     }
     //------------------- this to retrive all groups of certain user
@@ -154,7 +156,7 @@ class UserController extends Controller
             return $user->groups;
         }
         else{
-            return ['response'=>'This user is not exist'];  
+            return ['response'=>'This user is not exist'];
         }
     }
     //---------------------------- this function to update interests of user
@@ -167,11 +169,54 @@ class UserController extends Controller
                  array_push($interestArr,Interest::where('name',$interest)->first()->id);
                  }
                  $user->interests()->sync($interestArr);
-                 $user->save(); 
+                 $user->save();
                  return ['response'=>'Interests changed successfully'];
         }
-        return ['response'=>'This user is not exist'];  
+        return ['response'=>'This user is not exist'];
+      }
+
+      //this function to return user notification -- nahla
+      public function notifications(){
+        $userId = request()->user_id;
+        $user = User::find($userId);
+        $notifications = $user->notifications()->paginate(10);
+        $notificationResource = NotificationResource::collection($notifications);
+          return $notificationResource;
       }
       
+
+      //this function to enable notification --nahla
+      public function enable(){
+        $userId = request()->user_id;
+        $user = User::find($userId);
+        if($user){
+        $user->update(['enable'=>true]);
+        return ['response'=>'notification enabled'];
+    }else{
+        return ["response"=>"User Does not exist !!"];
+    }
+    }
+    //this function to disable notification --nahla
+    public function disable(){
+        $userId = request()->user_id;
+        $user = User::find($userId);
+        if($user){
+        $user->update(['enable'=>false]);
+        return ['response'=>'notification disabled'];
+    }else{
+        return ["response"=>"User Does not exist !!"];
+    }
+    }
+    public function updateDeviceToken(){
+        $userId = request()->user_id;
+        $user = User::find($userId);
+        if($user){
+        $user->update(['device_token'=>request()->token]);
+        return ['response'=>'device token update successfully'];
+    }else{
+        return ["response"=>"User Does not exist !!"];
+    }
+
+    }
 
 }

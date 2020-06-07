@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class EditGroupTableWithOther extends Migration
+class AddEnableColumnToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class EditGroupTableWithOther extends Migration
      */
     public function up()
     {
-        // public function down()
-    {
-        Schema::table('groups', function (Blueprint $table) {
-            //
-           // $table->dropColumn('interest_id');
-            //$table->foreignId('interest_id')->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->boolean('enable')->default(true);
         });
-    }
     }
 
     /**
@@ -30,6 +25,8 @@ class EditGroupTableWithOther extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 }
