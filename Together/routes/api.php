@@ -85,6 +85,16 @@ Route::get('/status/{groupId}/{id}','Api\UserController@getStatus')->middleware(
 Route::post('/dragAdrop','Api\TaskController@dragAdrop')->middleware('auth:sanctum');
 //----------------------------------- this to get percentage
 Route::get('/getpercentage/{groupId}','Api\TaskController@getpercentage')->middleware('auth:sanctum');
+//----------------------- this to get request of admin
+Route::get('/requestOfuser/{userId}','Api\GroupController@requestOfuser')->middleware('auth:sanctum');
+//-------------------this to  changePosition tasks
+Route::post('/changePosition','Api\TaskController@changePosition')->middleware('auth:sanctum');
+//-------------------this to  changeProgressPosition tasks
+Route::get('/changeProgressPosition/{taskId}/{position}','Api\TaskController@changeProgressPosition');
+//-------------------this to  changeDonePosition tasks
+Route::get('/changeDonePosition/{taskId}/{position}','Api\TaskController@changeDonePosition');
+
+
 //...................................................... nahla - routes
 
 //interests and groups routes
