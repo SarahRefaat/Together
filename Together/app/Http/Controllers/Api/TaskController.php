@@ -29,7 +29,7 @@ class TaskController extends Controller
         $task=Task::find($id);
         if($task){
             $task->update(array('status'=>'in-progress'));
-            return ['response'=>'sucess'];
+            return ['response'=>'Success'];
         }
         return ['response'=>'This task not exist'];
     }
@@ -58,11 +58,14 @@ class TaskController extends Controller
         if($group){
             $tasks=Task::select('*')->where('group_id',$group->id)->where('status','to do')->get();
             $tasksList=array();
-            
+            $position=array();
             foreach($tasks as $task){
-                $taskEle=['id'=>$task->id,'name'=>$task->name,'description'=>$task->description];
+                $taskEle=['id'=>$task->id,'name'=>$task->name,'description'=>$task->description,'position'=>$task->position];
                array_push($tasksList,$taskEle);
+               array_push($position,$task->position);
             }
+            // ksort($tasksList);
+            array_multisort($position, SORT_ASC, $tasksList);
             return $tasksList;
         }
         return ['response'=>'This group not exist'];
@@ -73,11 +76,13 @@ class TaskController extends Controller
         if($group){
             $tasks=Task::select('*')->where('group_id',$group->id)->where('status','in-progress')->get();
             $tasksList=array();
-            
+            $position=array();
             foreach($tasks as $task){
-                $taskEle=['id'=>$task->id,'name'=>$task->name,'description'=>$task->description];
+                $taskEle=['id'=>$task->id,'name'=>$task->name,'description'=>$task->description,'position'=>$task->position];
                array_push($tasksList,$taskEle);
+               array_push($position,$task->position);
             }
+            array_multisort($position, SORT_ASC, $tasksList);
             return $tasksList;
         }
         return ['response'=>'this group not exist'];
@@ -88,11 +93,13 @@ class TaskController extends Controller
         if($group){
             $tasks=Task::select('*')->where('group_id',$group->id)->where('status','done')->get();
             $tasksList=array();
-            
+            $position=array();
             foreach($tasks as $task){
                 $taskEle=['id'=>$task->id,'name'=>$task->name,'description'=>$task->description];
                array_push($tasksList,$taskEle);
+               array_push($position,$task->position);
             }
+            array_multisort($position, SORT_ASC, $tasksList);
             return $tasksList;
         }
         return ['response'=>'this group not exist'];
@@ -111,5 +118,36 @@ class TaskController extends Controller
        $task=Task::find($id);
        $task->delete();
        return ['response'=>'This task deleted successfully'];
+   }
+   //----------------------------- this to chsnge certain to do task position
+   public function changeDoPosition($taskId,$position){
+      $task=Task::find($taskId);
+      if($task){
+          $task->position=$position;
+          $task->save();
+            return ['response'=>'Position changed successfully'];
+      }
+          return ['response'=>'This task didn\'t move correctly'];
+   }
+   //----------------------------- this to change certain in-progress task position
+   public function changeProgressPosition($taskId,$position){
+    $task=Task::find($taskId);
+    if($task){
+        $task->position=$position;
+        $task->save();
+          return ['response'=>'Position changed successfully'];
+    }
+        return ['response'=>'This task didnt move correctly'];   
+   }
+   //------------------------------- this to change done tasks position
+   public function changeDonePosition($taskId,$position){
+    $task=Task::find($taskId);
+    if($task){
+        $task->position=$position;
+        $task->save();
+        
+          return ['response'=>'Position changed successfully'];
+    }
+        return ['response'=>'This task didnt move correctly'];   
    }
 }

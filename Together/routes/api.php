@@ -75,6 +75,13 @@ Route::get('/deleteTask/{id}','Api\TaskController@deleteTask');
 Route::post('/updateTask/{id}','Api\TaskController@updateTask');
 //------------------------ this route to move task to do list
 Route::get('/do/{id}','Api\TaskController@moveTodo');
+//-------------------this to  changetodoPosition tasks
+Route::get('/changeTodoPosition/{taskId}/{position}','Api\TaskController@changeDoPosition');
+//-------------------this to  changeProgressPosition tasks
+Route::get('/changeProgressPosition/{taskId}/{position}','Api\TaskController@changeProgressPosition');
+//-------------------this to  changeDonePosition tasks
+Route::get('/changeDonePosition/{taskId}/{position}','Api\TaskController@changeDonePosition');
+
 
 
 // //----------------------sanctum generate token for user 
