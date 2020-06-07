@@ -188,7 +188,35 @@ class UserController extends Controller
             }
  
         }
-
+        //----------------------------- this to return status of user(one of group , not in send request)
+       public function getStatus ($groupId,$id){
+        $group=Group::find($groupId);
+        $members=$group->users;
+       // return $members;
+        foreach ($members as $member){
+            if($member->id==$id){
+                $status ='Member of this group';
+                return ['response'=>$status];
+            }
+            else {
+                $status = 'Not member';
+            }
+        }
+        if($status){
+            $case=$status;
+            $status=' ';
+        }
+        $requests=$group->requests;
+        foreach($requests as $request){
+            if($request->user_id == $id){
+                $status =' , This user waiting for admin of group to accept his request of join';
+            }
+            else {
+                $status=' ';
+            }
+        }
+        return ['response'=>$case .$status];
+    }
       //this function to return user notification -- nahla
       public function notifications(){
         $userId = request()->user_id;
