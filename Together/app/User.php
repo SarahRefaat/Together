@@ -52,7 +52,6 @@ class User extends Authenticatable
     //------------------- this represent relation btn user and requests
     public function requests(){
         return $this->hasMany('App\UserRequest');
-
     }
 
     public function notifications(){
