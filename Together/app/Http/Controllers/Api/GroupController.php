@@ -198,7 +198,7 @@ class GroupController extends Controller
         $sender=$message->user;
         $senderName=$sender->name;
         $content=$message->content;
-        $record = ['sender'=>$senderName,'content'=>$content];
+        $record = ['sender'=>$senderName,'content'=>$content,'id'=>$sender->id];
         array_push($allMessages,$record);
       }
       return ['response'=>$allMessages];
