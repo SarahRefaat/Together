@@ -166,7 +166,7 @@ class GroupController extends Controller
         $group=Group::find($groupId);
         $allRequests=array();
         foreach($group->requests as $request){
-            $obj=[$request->user->name,$request->content];
+            $obj=['name'=>$request->user->name,'id'=>$request->user->id,'content'=>$request->content];
             array_push($allRequests,$obj);
         }
         return $allRequests;
