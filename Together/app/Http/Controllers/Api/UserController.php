@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 use App\User;
 use App\Interest;
+use App\Group;
 use Laravel\Sanctum\PersonalAccessToken;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
