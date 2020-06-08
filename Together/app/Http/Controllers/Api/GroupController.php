@@ -61,7 +61,7 @@ class GroupController extends Controller
         //------------ this user not in the group ??????
         $existUsers=$group->users;
         foreach($existUsers as $exist){
-              if($user->id==$exist->id){
+              if($user->id == $exist->id){
                 return ['response'=>'This user already in this group'];
               }
         }
@@ -114,7 +114,7 @@ class GroupController extends Controller
         $group->users()->detach($user);
         $group->current_number_of_members=$group->current_number_of_memebers-1;
         if($group->current_number_of_members < 0){
-          $group->current_number_of_members=0;
+          $group->delete();
         }
         $group->save();
         return ['response'=>'member removed successfully'];
