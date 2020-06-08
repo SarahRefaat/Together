@@ -127,6 +127,8 @@ Route::delete('/notifications/{id}', 'API\NotificationController@destroy')->midd
 
 //this route to update the device token of the user once recieved
 Route::post('/users/{user_id}/devicetoken','API\UserController@updateDeviceToken')->middleware('auth:sanctum');
+//this route to display requests for the admin
+Route::get('/users/{user_id}/requests','API\UserController@requests')->middleware('auth:sanctum');
 
 // //----------------------sanctum generate token for user
 // Route::post('/sanctum/token', function (Request $request) {

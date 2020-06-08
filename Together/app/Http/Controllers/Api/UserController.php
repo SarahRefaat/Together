@@ -268,6 +268,7 @@ class UserController extends Controller
         return ["response"=>"User Does not exist !!"];
     }
     }
+    //this function to update device token for notifications --nahla
     public function updateDeviceToken(){
         $userId = request()->user_id;
         $user = User::find($userId);
@@ -279,5 +280,12 @@ class UserController extends Controller
     }
 
     }
+      //this function to return user requests -- nahla
+      public function requests(){
+        $userId = request()->user_id;
+        //$user = User::find($userId);
+          return 0;
+      }
+
 
 }
