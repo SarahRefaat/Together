@@ -137,6 +137,7 @@ class GroupController extends Controller
             return ['response'=>'Group deleted sucessfully'];
           }
           $group->admin_id=$group->users[0]->id;
+          $group->save();
           return ['response'=>'member left successfully'];
         }
         $group->users()->detach($user);
