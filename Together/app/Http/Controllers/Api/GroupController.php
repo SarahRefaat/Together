@@ -169,7 +169,7 @@ class GroupController extends Controller
             $obj=['name'=>$request->user->name,'id'=>$request->user->id,'content'=>$request->content];
             array_push($allRequests,$obj);
         }
-        return $allRequests;
+        return ['response'=>$allRequests];
       }
        //--------------------- this to get user requests
        public function requestOfuser($userId){
