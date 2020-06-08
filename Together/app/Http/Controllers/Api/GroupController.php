@@ -134,13 +134,15 @@ class GroupController extends Controller
           
           if($group->current_number_of_members == 1){
             $group->delete();
+            return ['response'=>'Group deleted sucessfully'];
           }
-          $group->admin_id=$group->users[0];
+          $group->admin_id=$group->users[0]->id;
+          return ['response'=>'member left successfully'];
         }
         $group->users()->detach($user);
         $group->current_number_of_members = $group->current_number_of_members-1;
         $group->save();
-        return ['response'=>'member leaved successfully'];
+        return ['response'=>'member left successfully'];
       }
       //---------------------------- this function to update group information
       public function updateGroup(Request $request,$groupId){
