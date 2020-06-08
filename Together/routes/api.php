@@ -97,7 +97,8 @@ Route::post('/changePosition','Api\TaskController@changePosition')->middleware('
 Route::get('/changeProgressPosition/{taskId}/{position}','Api\TaskController@changeProgressPosition');
 //-------------------this to  changeDonePosition tasks
 Route::get('/changeDonePosition/{taskId}/{position}','Api\TaskController@changeDonePosition');
-
+//---------------------------- this to get old messages
+Route::get('/getChat/{groupId}','Api\GroupController@getChat');
 
 //...................................................... nahla - routes
 
