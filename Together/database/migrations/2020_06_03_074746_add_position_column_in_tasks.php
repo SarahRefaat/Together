@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class EaddTaskDescriptionColumnInTasks extends Migration
+class AddPositionColumnInTasks extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class EaddTaskDescriptionColumnInTasks extends Migration
     {
         Schema::table('tasks', function (Blueprint $table) {
             //
-            $table->string('description',255)->nullable();
+            $table->integer('position')->default(100);
         });
     }
 

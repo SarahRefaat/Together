@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 use App\User;
 use App\Interest;
+use Laravel\Sanctum\PersonalAccessToken;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\ValidationException;
@@ -65,7 +66,7 @@ class UserController extends Controller
         if($user){
        // return ['response'=>'Signed up Successfully'];
           $response=$this->signin($request);
-          return ['response'=>$response];
+          return $response;
          }
 
         else {
@@ -121,6 +122,7 @@ class UserController extends Controller
         'name'=>$user->name,
         'email'=>$user->email,
         'gender'=>$user->gender,
+        'photo'=>$user->photo,
         'password'=>decrypt($user->password),
         'BirthDate'=>$user->BirthDate,
         'address'=>$user->address,
@@ -141,6 +143,7 @@ class UserController extends Controller
             $user->fill(['password' => encrypt($request->password)]);
             $user->BirthDate =$request->BirthDate;
             $user->gender = $request->gender;
+            $user->photo= $request->photo;
             $user->address=$request->address;
             $user->update();
             return ['response'=>'Updated Successfully'];
@@ -151,9 +154,24 @@ class UserController extends Controller
     }
     //------------------- this to retrive all groups of certain user
     public function home($id){
-        $user=User::where('id',$id)->first();
+        $groups=array();
+        $user=User::find($id);
         if($user){
-            return $user->groups;
+            $user_groups=$user->groups;
+            foreach($user_groups as $group){
+                $obj=['group_id'=>$group->id,
+                      'address'=>$group->address,
+                       'max_member_number'=>$group->max_member_number,
+                       'name'=>$group->name,
+                       'description'=>$group->description,
+                       'current_number_of_members'=>$group->current_number_of_members,
+                       'status'=>$group->status,
+                       'level'=>$group->level,
+                       'interest_id'=>$group->interest_id,
+                        'id'=>$group->admin_id];
+                array_push($groups,$obj);
+            }
+            return $groups;
         }
         else{
             return ['response'=>'This user is not exist'];
@@ -174,7 +192,49 @@ class UserController extends Controller
         }
         return ['response'=>'This user is not exist'];
       }
-
+        //---------------------------- this function used to logout
+        public function logout($id){
+            $user=User::find($id);
+            if($user){
+               //Auth::logout();
+               $tokens=PersonalAccessToken::where('name',$user->email)->get();
+               foreach($tokens as $token){
+                 $token->delete();
+               }
+               
+               return ['response'=>'logout successfully'];
+            }
+ 
+        }
+        //----------------------------- this to return status of user(one of group , not in send request)
+       public function getStatus ($groupId,$id){
+        $group=Group::find($groupId);
+        $members=$group->users;
+       // return $members;
+        foreach ($members as $member){
+            if($member->id==$id){
+                $status ='Member of this group';
+                return ['response'=>$status];
+            }
+            else {
+                $status = 'Not member';
+            }
+        }
+        if($status){
+            $case=$status;
+            $status=' ';
+        }
+        $requests=$group->requests;
+        foreach($requests as $request){
+            if($request->user_id == $id){
+                $status =' , This user waiting for admin of group to accept his request of join';
+            }
+            else {
+                $status=' ';
+            }
+        }
+        return ['response'=>$case .$status];
+    }
       //this function to return user notification -- nahla
       public function notifications(){
         $userId = request()->user_id;
@@ -183,6 +243,7 @@ class UserController extends Controller
         $notificationResource = NotificationResource::collection($notifications);
           return $notificationResource;
       }
+      
 
       //this function to enable notification --nahla
       public function enable(){

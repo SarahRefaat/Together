@@ -92,6 +92,8 @@ class GroupController extends Controller
         if($group){
         return ['name'=>$group->name,
         'description'=>$group->sdescription,
+        'group_id'=>$group->id,
+        'id'=>$group->admin_id,
         'status'=>$group->status,
         'duration'=>$group->duration,
         'members'=>$members,
@@ -128,7 +130,7 @@ class GroupController extends Controller
         $group=Group::find($groupid);
         $user=User::find($id);
         $group->users()->detach($user);
-        $group->current_number_of_memebers=$group->current_number_of_memebers-1;
+        $group->current_number_of_members = $group->current_number_of_members-1;
         $group->save();
         return ['response'=>'member leaved successfully'];
       }
@@ -152,6 +154,30 @@ class GroupController extends Controller
         $group=Group::find($groupId);
         return $group->requests;
       }
+       //--------------------- this to get user requests
+       public function requestOfuser($userId){
+        $user=User::find($userId);
+        if($user){
+        $adminOf = array();
+        $groups=$user->groups;
+        foreach($groups as $group){
+          if($group->admin_id == $userId){
+             array_push($adminOf,$group);
+          }
+        }
+        $allRequests=array();
+        $requests=array();
+        foreach($adminOf as $groupAdmin){
+            if( sizeof($groupAdmin->requests)>0){
+          array_push($allRequests,$groupAdmin->requests);
+          }
+        }
+        return ['response'=>$allRequests];
+      }
+    else{
+      return ['response'=>'This user not exist'];
+    }
+  }
       //--------------------- this for user to send join request
       public function requestToJoin(Request $outRequest,$groupId,$id){
         $request = new UserRequest;
@@ -162,6 +188,20 @@ class GroupController extends Controller
         }
         $request->save();
         return ['response'=>'Request sent successfully wait for admin to accept it'];
+    }
+    //---------------------- this to get chat of certain group bervious messags
+    public function getChat($groupId){
+      $group=Group::find($groupId);
+      $allMessages=array();
+      $messages=$group->messages;
+      foreach($messages as $message){
+        $sender=$message->user;
+        $senderName=$sender->name;
+        $content=$message->content;
+        $record = ['sender'=>$senderName,'content'=>$content];
+        array_push($allMessages,$record);
+      }
+      return ['response'=>$allMessages];
     }
     // this function for user to search for a group by keyword
     public function search(){
