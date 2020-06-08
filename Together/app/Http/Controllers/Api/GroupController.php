@@ -73,7 +73,7 @@ class GroupController extends Controller
         return ['response'=>'Member added successfully'];
         }
         else{
-          return ['response'=>'This group id full'];
+          return ['response'=>'This group is full'];
         }
       }
       else{
@@ -129,6 +129,14 @@ class GroupController extends Controller
       public function leave($groupid,$id){
         $group=Group::find($groupid);
         $user=User::find($id);
+        if($group->admin_id == $user->id){
+          $group->users()->detach($user);
+          
+          if($group->current_number_of_members == 1){
+            $group->delete();
+          }
+          $group->admin_id=$group->users[0];
+        }
         $group->users()->detach($user);
         $group->current_number_of_members = $group->current_number_of_members-1;
         $group->save();
