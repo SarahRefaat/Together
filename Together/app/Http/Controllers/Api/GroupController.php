@@ -164,7 +164,12 @@ class GroupController extends Controller
       //-------------------- this to get all request of certain group
       public function requests($groupId){
         $group=Group::find($groupId);
-        return $group->requests;
+        $allRequests=array();
+        foreach($group->requests as $request){
+            $obj=[$request->user->name,$request->content];
+            array_push($allRequests,$obj);
+        }
+        return $allRequests;
       }
        //--------------------- this to get user requests
        public function requestOfuser($userId){
