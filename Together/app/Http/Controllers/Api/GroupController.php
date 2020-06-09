@@ -185,7 +185,7 @@ class GroupController extends Controller
             $obj=['id'=>$request->id,'content'=>$request->user->name.', '.$request->request_content,'photo'=>$request->user->photo];
             array_push($allRequests,$obj);
         }
-        return [$allRequests];
+        return $allRequests;
       }
        //--------------------- this to get user requests
        public function requestOfuser($userId){
