@@ -43,14 +43,6 @@ class InterestController extends Controller
             return ["response"=>"This interest does not exist !!.."];
         }
     }
-      //---------------- this function to get groups under certain interest
-      public function ListGroups($id){
-        $interest=Interest::find($id);
-        $groups=$interest->groups;
-      return ['reponse'=>$groups];
-    }
-    //-------------------this function to add new interes
-    // if that is okay with 7ossam just copy it from ur file (interestdes);
     //-------------------- here u can get all interests
     public function interests(Request $request){
       return Interest::all();
