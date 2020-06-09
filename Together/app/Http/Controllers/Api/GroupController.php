@@ -109,11 +109,12 @@ class GroupController extends Controller
         $adminMember=User::find($request->input('current_user_id'));
         $group=Group::find($groupid);
         if($group){
-          if($group->admin_id==$adminMember->id){
+          if($group->admin_id == $adminMember->id){
         $user=User::find($id);
         $group->users()->detach($user);
         $group->current_number_of_members=$group->current_number_of_memebers-1;
-        if($group->current_number_of_members < 0){
+        $group->save();
+        if($group->current_number_of_members <= 0){
           $group->delete();
         }
         $group->save();
@@ -167,7 +168,7 @@ class GroupController extends Controller
         $group=Group::find($groupId);
         $allRequests=array();
         foreach($group->requests as $request){
-            $obj=['name'=>$request->user->name,'id'=>$request->user->id,'content'=>$request->content,'photo'=>$request->user->photo];
+            $obj=['id'=>$request->id,'content'=>$request->user->name.$request->content,'photo'=>$request->user->photo];
             array_push($allRequests,$obj);
         }
         return ['response'=>$allRequests];

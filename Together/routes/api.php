@@ -40,7 +40,7 @@ Route::get('/show/{groupid}','Api\GroupController@show')->middleware('auth:sanct
 //-----------------------------this route to add member
 Route::get('/add/{groupid}/{id}','Api\GroupController@addMember')->middleware('auth:sanctum');
 //----------------------------this route to remove member
-Route::get('/remove/{groupid}/{id}','Api\GroupController@removeMember')->middleware('auth:sanctum');
+Route::get('/remove/{groupid}/{id}','Api\GroupController@removeMember');//->middleware('auth:sanctum');
 //----------------------------this route to add new task
 Route::post('/add','Api\TaskController@add')->middleware('auth:sanctum');
 //------------------------------this route to add task to in-progress list
