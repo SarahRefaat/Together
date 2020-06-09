@@ -182,7 +182,7 @@ class GroupController extends Controller
         $group=Group::find($groupId);
         $allRequests=array();
         foreach($group->requests as $request){
-            $obj=['id'=>$request->id,'content'=>$request->user->name.$request->request_content,'photo'=>$request->user->photo];
+            $obj=['id'=>$request->id,'content'=>$request->user->name.' , '.$request->request_content,'photo'=>$request->user->photo];
             array_push($allRequests,$obj);
         }
         return ['response'=>$allRequests];
