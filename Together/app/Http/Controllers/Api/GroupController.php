@@ -185,7 +185,7 @@ class GroupController extends Controller
             $obj=['id'=>$request->id,'content'=>$request->user->name.', '.$request->request_content,'photo'=>$request->user->photo];
             array_push($allRequests,$obj);
         }
-        return ['response'=>$allRequests];
+        return [$allRequests];
       }
        //--------------------- this to get user requests
        public function requestOfuser($userId){
@@ -222,7 +222,7 @@ class GroupController extends Controller
         $request->save();
         return ['response'=>'Request sent successfully wait for admin to accept it'];
     }
-    //---------------------- this to get chat of certain group bervious messags
+    //---------------------- this to get chat of certain group pervious messags
     public function getChat($groupId){
       $group=Group::find($groupId);
       $allMessages=array();
