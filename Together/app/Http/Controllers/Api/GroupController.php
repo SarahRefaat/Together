@@ -15,7 +15,7 @@ class GroupController extends Controller
     //------------------this function to create a new group
     public function create(Request $request){
       $valid = $request->validate([
-        'name' => 'required|min:3|max:255',
+        'name' => 'required|min:3|max:100',
         'description' => 'required',
         'status' => 'required',
         'level' => 'required',
@@ -46,6 +46,20 @@ class GroupController extends Controller
       $group->save();
       $group->users()->attach($admin);
       return ['response'=>'Group Created Successfully'];
+      //test notifications
+     /* $beamsClient = new \Pusher\PushNotifications\PushNotifications(array(
+        "instanceId" => "ed3b05e0-b714-487d-a137-8daea3dfdecd",
+        "secretKey" => "7F35FFC2B1FE5D28979F03D66AD0B0E8D593C88558605F515160E0D2F888EC67",
+      ));
+
+      $publishResponse = $beamsClient->publish(
+        array("debug-together"),
+        array("fcm" => array("notification" => array(
+          "title" => "Together",
+          "body" => "You have been removed from group",
+        )),
+      ));*/
+
       }
       //-------------------------this fuction to add member to p
       public static function addMember($groupid,$id,Request $request){

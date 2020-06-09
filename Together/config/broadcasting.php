@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('BROADCAST_DRIVER', 'null'),
+    'default' => env('BROADCAST_DRIVER', 'pusher'),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,8 +39,11 @@ return [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
                 'useTLS' => true,
             ],
+            'beams' => [
+                    'secret_key' => env('PUSHER_BEAMS_SECRET_KEY'),
+                    'instance_id' => env('PUSHER_BEAMS_INSTANCE_ID'),
+                ],
         ],
-
         'redis' => [
             'driver' => 'redis',
             'connection' => 'default',
