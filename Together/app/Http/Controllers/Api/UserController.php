@@ -18,7 +18,7 @@ class UserController extends Controller
 {
     //-------------------this function to sign up
     public function signup(Request $request){
-        //----------- this to vslidate request
+        //----------- this to validate request
         $valid = $request->validate([
             'name' => 'required|min:3|max:255',
             'email' => 'required',
@@ -203,10 +203,10 @@ class UserController extends Controller
                foreach($tokens as $token){
                  $token->delete();
                }
-               
+
                return ['response'=>'logout successfully'];
             }
- 
+
         }
         //----------------------------- this to return status of user(one of group , not in send request)
        public function getStatus ($groupId,$id){
@@ -241,11 +241,14 @@ class UserController extends Controller
       public function notifications(){
         $userId = request()->user_id;
         $user = User::find($userId);
-        $notifications = $user->notifications()->paginate(10);
+        $notifications = Notification::where('user_id',$userId)->orderBy('id', 'DESC')->paginate(10);
         $notificationResource = NotificationResource::collection($notifications);
-          return $notificationResource;
+          return [
+              'data'=>$notificationResource,
+              'status'=>$user->enable
+            ];
       }
-      
+
 
       //this function to enable notification --nahla
       public function enable(){
@@ -283,7 +286,7 @@ class UserController extends Controller
     }
       //this function to return user requests -- nahla
       public function requests(){
-        $userId = request()->user_id;
+       // $userId = request()->user_id;
         //$user = User::find($userId);
           return 0;
       }
