@@ -31,6 +31,8 @@ Route::get('/show','Api\UserController@show')->middleware('auth:sanctum');
 Route::get('/interest','Api\InterestController@interests');
 //-----------------------------------this to update profile
 Route::post('/update/{id}','Api\UserController@update')->middleware('auth:sanctum');
+//-----------------------------this route to get all groups with the same interest
+Route::get('/groups/{id}','Api\InterestController@ListGroups');
 //-------------------------this route to create group
 Route::post('/createGroup','Api\GroupController@create')->middleware('auth:sanctum');
 //-------------------------this route to show group

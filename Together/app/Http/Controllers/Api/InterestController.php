@@ -47,4 +47,5 @@ class InterestController extends Controller
     public function interests(Request $request){
       return Interest::all();
     }
+    
 }
