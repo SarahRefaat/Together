@@ -37,8 +37,8 @@ class GroupController extends Controller
       $group->description = $request->description;
       $group->max_member_number = $request->max_member_number;
       $group->duration = $request->duration;
-      $group->current_number_of_members = 1;
-      $group->level = $request->level;
+      $group->current_number_of_members += 1;
+     // $group->level = $request->level;
       $group->status = $request->status;
       $group->photo=$request->photo;
       $interest=Interest::where('name',$request->interest)->first();
@@ -125,19 +125,27 @@ class GroupController extends Controller
         if($group){
           if($group->admin_id == $adminMember->id){
         $user=User::find($id);
-        $group->users()->detach($user);
-        $group->current_number_of_members=$group->current_number_of_memebers-1;
-        $group->save();
-        if($group->current_number_of_members <= 0){
-          $group->delete();
-        }
-        $group->save();
-        return ['response'=>'member removed successfully'];
-        }
-      }
+        $existUsers=$group->users;
+        foreach($existUsers as $exist){
+          if($user->id == $exist->id){
+            $group->users()->detach($user);
+            $current_member_count=$group->current_number_of_members;
+            $group->current_number_of_members=$current_member_count-1;
+            //$group->save();
+            if($group->current_number_of_members <= 0){
+              $group->delete();
+              return ['response'=>'No more members group deleted'];
+            }
+            $group->save();
+            return ['response'=>'member removed successfully'];
+            }
+          }
+          return ['response'=>'Not member of this group'];
+         }
       else{
         return ['response'=>'u aren\'t the admin'];
       }
+    }
         return ['response'=>'this group doesnt exist'];
       }
       //------------------ this function for user how wants to leave how 7orr

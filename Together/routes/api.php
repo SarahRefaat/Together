@@ -34,11 +34,11 @@ Route::post('/update/{id}','Api\UserController@update')->middleware('auth:sanctu
 //-----------------------------this route to get all groups with the same interest
 Route::get('/groups/{id}','Api\InterestController@ListGroups');
 //-------------------------this route to create group
-Route::post('/createGroup','Api\GroupController@create')->middleware('auth:sanctum');
+Route::post('/createGroup','Api\GroupController@create');//->middleware('auth:sanctum');
 //-------------------------this route to show group
 Route::get('/show/{groupid}','Api\GroupController@show')->middleware('auth:sanctum');
 //-----------------------------this route to add member
-Route::get('/add/{groupid}/{id}','Api\GroupController@addMember')->middleware('auth:sanctum');
+Route::get('/add/{groupid}/{id}','Api\GroupController@addMember');//->middleware('auth:sanctum');
 //----------------------------this route to remove member
 Route::get('/remove/{groupid}/{id}','Api\GroupController@removeMember');//->middleware('auth:sanctum');
 //----------------------------this route to add new task
