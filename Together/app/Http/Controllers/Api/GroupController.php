@@ -172,9 +172,11 @@ class GroupController extends Controller
       public function updateGroup(Request $request,$groupId){
         $adminMember=User::find($request->input('current_user_id'));
           $group=Group::find($groupId);
-          $request->validate([
-            'name' => 'unique:groups,name,'.$group->id]);
+          $groupWithTheSameTitle=Group::where('name',$request->name)->first();
           if($group->admin_id == $adminMember->id){
+            if($groupWithTheSameTitle&&$groupWithTheSameTitle->id!=$groupId){
+              return ['response'=>'This title already exist'];
+            }
           $group->update($request->only('name','description','address','photo','duration'));
           if($group){
             return ['response'=>'updated successfully'];

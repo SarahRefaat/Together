@@ -50,7 +50,7 @@ Route::get('/done/{id}','Api\TaskController@moveToDone')->middleware('auth:sanct
 //---------------------------- this route for user to leave el group
 Route::get('/leave/{groupid}/{id}','Api\GroupController@leave')->middleware('auth:sanctum');
 //----------------------------------- this route to update group info
-Route::post('/updateGroup/{id}','Api\GroupController@updateGroup')->middleware('auth:sanctum');
+Route::post('/updateGroup/{id}','Api\GroupController@updateGroup');//->middleware('auth:sanctum');
 //-------------------------then all routes with be grouped to authenticate them
 Route::get('/todo/{groupId}','Api\TaskController@listTodos')->middleware('auth:sanctum');
 //-------------------------- this to get in-progress tasks of group
