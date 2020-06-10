@@ -233,9 +233,9 @@ class GroupController extends Controller
         if($outRequest->content){
         $request->request_content = $outRequest->content;
         }
-        if($group->current_number_of_members=$group->max_member_number){
-          return ['response'=>'Can\'t accept ur request this group is full'];
-        }
+        //if($group->current_number_of_members=$group->max_member_number){
+         // return ['response'=>'Can\'t accept ur request this group is full'];
+        //}
         $request->save();
         return ['response'=>'Request sent successfully wait for admin to accept it'];
     }
