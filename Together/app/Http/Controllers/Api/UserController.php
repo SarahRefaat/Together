@@ -169,6 +169,7 @@ class UserController extends Controller
                        'status'=>$group->status,
                        'level'=>$group->level,
                        'photo'=>$group->photo,
+                       'duration'=>$group->duration,
                        'interest_id'=>$group->interest_id,
                         'id'=>$group->admin_id];
                 array_push($groups,$obj);
