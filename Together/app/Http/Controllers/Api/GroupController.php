@@ -160,11 +160,14 @@ class GroupController extends Controller
             return ['response'=>'Group deleted sucessfully'];
           }
           $group->admin_id=$group->users[0]->id;
+          $current_member_count=$group->current_number_of_members;
+          $group->current_number_of_members=$current_member_count-1;
           $group->save();
           return ['response'=>'member left successfully'];
         }
         $group->users()->detach($user);
-        $group->current_number_of_members = $group->current_number_of_members-1;
+        $current_member_count=$group->current_number_of_members;
+        $group->current_number_of_members=$current_member_count-1;
         $group->save();
         return ['response'=>'member left successfully'];
       }
