@@ -212,9 +212,6 @@ class UserController extends Controller
         //----------------------------- this to return status of user(one of group , not in send request)
        public function getStatus ($groupId,$id){
         $group=Group::find($groupId);
-        if($group->current_number_of_members == $group->max_member_number){
-            return ['response'=>'This group is full'];
-        }
         $members=$group->users;
        // return $members;
         foreach ($members as $member){
@@ -223,6 +220,9 @@ class UserController extends Controller
                 return ['response'=>$status];
             }
             else {
+                if($group->current_number_of_members == $group->max_member_number){
+                    return ['response'=>'This group is full'];
+                }
                 $status = 'Not member';
             }
         }
