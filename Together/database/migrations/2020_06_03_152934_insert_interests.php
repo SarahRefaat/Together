@@ -15,16 +15,16 @@ class InsertInterests extends Migration
     {
 
         $interests=[
-            ["id"=>1,"name"=>"Development","img"=>"https://imgur.com/yXBVzZV"],
-            ["id"=>2,"name"=>"Language","img"=>"https://imgur.com/Y92Th8i"],
-            ["name"=>"Art","img"=>"https://imgur.com/imT16D2"],
-            ["name"=>"Music","img"=>"https://imgur.com/PGOxhNJ"],
-            ["name"=>"Sports","img"=>"https://imgur.com/Y3HzfY7"],
-            ["name"=>"Dancing","img"=>"https://imgur.com/lmgCE7K"],
-            ["name"=>"Handmade","img"=>"https://imgur.com/6UFLIu7"],
-            ["name"=>"Religion","img"=>"https://imgur.com/adUN6il"],
-            ["name"=>"Reading","img"=>"https://imgur.com/WdEkDyb"],
-            ["name"=>"Other","img"=>"https://imgur.com/a/cHCBjJB"]
+            ["id"=>1,"name"=>"Development","img"=>"https://imgur.com/yXBVzZV.jpg"],
+            ["id"=>2,"name"=>"Language","img"=>"https://imgur.com/Y92Th8i.jpg"],
+            ["name"=>"Art","img"=>"https://imgur.com/imT16D2.jpg"],
+            ["name"=>"Music","img"=>"https://imgur.com/PGOxhNJ.jpg"],
+            ["name"=>"Sports","img"=>"https://imgur.com/Y3HzfY7.jpg"],
+            ["name"=>"Dancing","img"=>"https://imgur.com/lmgCE7K.jpg"],
+            ["name"=>"Handmade","img"=>"https://imgur.com/6UFLIu7.jpg"],
+            ["name"=>"Religion","img"=>"https://imgur.com/adUN6il.jpg"],
+            ["name"=>"Reading","img"=>"https://imgur.com/WdEkDyb.jpg"],
+            ["name"=>"Other","img"=>"https://imgur.com/pTqDZMz.jpg"]
             ];
             for($i=0; $i < count($interests); $i++) {
                 $name= $interests[$i]["name"];

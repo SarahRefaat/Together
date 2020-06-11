@@ -25,6 +25,7 @@ class GroupResource extends JsonResource
             'level'=>$this->level,
             'photo' => $this->photo,
             'interest_id'=>$this->interest_id,
+            'duration'=>$this->duration,
             'id'=>$this->admin_id
         ];
     }
