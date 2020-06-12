@@ -45,10 +45,6 @@ class User extends Authenticatable
     public function interests(){
         return $this->belongsToMany('App\Interest');
     }
-    //-------------------this to represent relation btn user and other interests
-    // public function others(){
-    //     return $this->belongsToMany('App\Other');
-    // }
     //------------------- this represent relation btn user and requests
     public function requests(){
         return $this->hasMany('App\UserRequest');

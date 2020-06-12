@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Resources\InterestResource;
 use App\Http\Resources\GroupResource;
 use App\Interest;
+use App\User;
+use App\Group;
 
 class InterestController extends Controller
 {
@@ -43,5 +45,5 @@ class InterestController extends Controller
     public function interests(Request $request){
       return Interest::all();
     }
-    
+
 }

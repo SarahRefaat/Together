@@ -8,7 +8,7 @@ use App\Interest;
 use App\UserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Helpers\Helper;
 
 class GroupController extends Controller
 {
@@ -29,8 +29,6 @@ class GroupController extends Controller
         return ['response'=>'This group title is exist'];
       }
       $admin=User::find($request->id);
-
-      //$group=Group::create($request->except('id','other'));
       $group=new Group();
       $group->admin_id = $admin->id;
       $group->name = $request->name;
@@ -45,6 +43,7 @@ class GroupController extends Controller
       $group->interest_id = $interest->id ;
       $group->save();
       $group->users()->attach($admin);
+      Helper::save_notification_for_group_sub($group);
       return ['response'=>'Group Created Successfully'];
       //test notifications
      /* $beamsClient = new \Pusher\PushNotifications\PushNotifications(array(
@@ -61,7 +60,7 @@ class GroupController extends Controller
       ));*/
 
       }
-      //-------------------------this fuction to add member to p
+      //-------------------------this fuction to add member to group
       public static function addMember($groupid,$id,Request $request){
 
         $adminMember=User::find($request->input('current_user_id'));
@@ -131,12 +130,14 @@ class GroupController extends Controller
             $group->users()->detach($user);
             $current_member_count=$group->current_number_of_members;
             $group->current_number_of_members=$current_member_count-1;
-            //$group->save();
             if($group->current_number_of_members <= 0){
               $group->delete();
               return ['response'=>'No more members group deleted'];
             }
             $group->save();
+            if($user->enable){
+            Helper::save_notification_for_user_removed($user,$group);
+            }
             return ['response'=>'member removed successfully'];
             }
           }
@@ -154,7 +155,7 @@ class GroupController extends Controller
         $user=User::find($id);
         if($group->admin_id == $user->id){
           $group->users()->detach($user);
-          
+
           if($group->current_number_of_members == 1){
             $group->delete();
             return ['response'=>'Group deleted sucessfully'];
@@ -233,9 +234,6 @@ class GroupController extends Controller
         if($outRequest->content){
         $request->request_content = $outRequest->content;
         }
-        //if($group->current_number_of_members=$group->max_member_number){
-         // return ['response'=>'Can\'t accept ur request this group is full'];
-        //}
         $request->save();
         return ['response'=>'Request sent successfully wait for admin to accept it'];
     }

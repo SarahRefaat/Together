@@ -18,7 +18,7 @@ class CreateNotificationsTable extends Migration
             $table->id();
             $table->String("title");
             $table->text('body');
-            $table->String("img");
+            $table->String("img")->nullable;
             $table->String("info");
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();

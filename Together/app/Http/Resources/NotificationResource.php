@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Group;
 
 class NotificationResource extends JsonResource
 {
@@ -19,7 +20,8 @@ class NotificationResource extends JsonResource
             'title' => $this->title,
             'body' => $this->body,
             'img' => $this->img,
-            'info' => $this->info
+            'info' => $this->info,
+            'group'=>Group::find($this->group_id),
         ];
     }
 }
