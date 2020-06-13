@@ -9,6 +9,7 @@ use App\Http\Resources\GroupResource;
 use App\Interest;
 use App\User;
 use App\Group;
+use Illuminate\Http\Response;
 
 class InterestController extends Controller
 {
@@ -25,7 +26,8 @@ class InterestController extends Controller
         if($interest){
         return new InterestResource($interest);
         }else{
-            return ["response"=>"This interest does not exist !!.."];
+            $response = new Response(['response'=>'This interest does not exist !!..']);
+            return $response->setStatusCode(404);
         }
     }
     //this function to display groups of single interest

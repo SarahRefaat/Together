@@ -99,6 +99,7 @@ Route::get('/deleteMessage/{messageId}','Api\MessageController@delete')->middlew
 //...................................................... nahla - routes
 
 //interests and groups routes
+
 //this route display all interests
 Route::get('/interests', 'API\InterestController@index')->middleware('auth:sanctum');
 //this route display single interest
@@ -109,6 +110,7 @@ Route::get('/interests/{interest}/groups', 'API\InterestController@groups')->mid
 Route::get('/groups/search', 'API\GroupController@search')->middleware('auth:sanctum');
 
 //notifications routes
+
 //this route get all user notifications
 Route::get('/users/{user_id}/notifications', 'API\UserController@notifications')->middleware('auth:sanctum');
 //this route display single notification by id
