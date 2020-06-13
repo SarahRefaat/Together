@@ -40,7 +40,8 @@ class InterestController extends Controller
         return $groupResource;
         }
         else{
-            return ["response"=>"This interest does not exist !!.."];
+            $response = new Response(['response'=>'This interest does not exist !!..']);
+            return $response->setStatusCode(404);
         }
     }
     //-------------------- here u can get all interests

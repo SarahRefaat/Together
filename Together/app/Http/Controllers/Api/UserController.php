@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\NotificationResource;
 use App\Notification;
 use App\Helpers\Helper;
+use Illuminate\Http\Response;
 class UserController extends Controller
 {
     //-------------------this function to sign up
@@ -229,12 +230,17 @@ class UserController extends Controller
       public function notifications(){
         $userId = request()->user_id;
         $user = User::find($userId);
+        if($user){
         $notifications = Notification::where('user_id',$userId)->orderBy('id', 'DESC')->paginate(10);
         $notificationResource = NotificationResource::collection($notifications);
           return [
               'data'=>$notificationResource,
               'status'=>$user->enable
             ];
+        }else{
+            $response = new Response(["response"=>"This user does not exist !!"]);
+            return $response->setStatusCode(404);
+        }
       }
 
 
@@ -246,7 +252,8 @@ class UserController extends Controller
         $user->update(['enable'=>true]);
         return ['response'=>'notification enabled'];
     }else{
-        return ["response"=>"User Does not exist !!"];
+        $response = new Response(["response"=>"This user does not exist !!"]);
+        return $response->setStatusCode(404);
     }
     }
     //this function to disable notification --nahla
@@ -257,7 +264,8 @@ class UserController extends Controller
         $user->update(['enable'=>false]);
         return ['response'=>'notification disabled'];
     }else{
-        return ["response"=>"User Does not exist !!"];
+        $response = new Response(["response"=>"This user does not exist !!"]);
+        return $response->setStatusCode(404);
     }
 
     }
@@ -269,7 +277,8 @@ class UserController extends Controller
         $user->update(['device_token'=>request()->token]);
         return ['response'=>'device token update successfully'];
     }else{
-        return ["response"=>"User Does not exist !!"];
+        $response = new Response(["response"=>"This user does not exist !!"]);
+        return $response->setStatusCode(404);
     }
 
     }
