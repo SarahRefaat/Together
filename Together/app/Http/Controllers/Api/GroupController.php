@@ -40,6 +40,7 @@ class GroupController extends Controller
       $group->level = $request->level;
       $group->status = $request->status;
       $group->photo=$request->photo;
+      $group->address=$request->address;
       $interest=Interest::where('name',$request->interest)->first();
       $group->interest_id = $interest->id ;
       $group->save();

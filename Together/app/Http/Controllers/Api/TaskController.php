@@ -32,7 +32,7 @@ class TaskController extends Controller
         $task=Task::find($id);
         if($task){
             $task->update(array('status'=>'in-progress'));
-            save_notification_for_todo($task->group(),$task,"doing");
+            Helper::save_notification_for_todo(Group::find($task->group_id),$task,"doing");
             return ['response'=>'Moved successfully'];
         }
         return ['response'=>'This task not exist'];
@@ -42,7 +42,7 @@ class TaskController extends Controller
         $task=Task::find($id);
         if($task){
             $task->update(array('status'=>'to do'));
-            save_notification_for_todo($task->group(),$task,"to do");
+            Helper::save_notification_for_todo(Group::find($task->group_id),$task,"to-do");
             return ['response'=>'Moved successfully'];
         }
         return ['response'=>'This task not exist'];
@@ -53,7 +53,7 @@ class TaskController extends Controller
         $task=Task::find($id);
         if($task){
             $task->update(array('status'=>'done'));
-            save_notification_for_todo($task->group(),$task,"done");
+            Helper::save_notification_for_todo(Group::find($task->group_id),$task,"done");
             return ['response'=>'Moved successfully'];
         }
         return ['response'=>'This task not exist'];
@@ -122,7 +122,7 @@ class TaskController extends Controller
    public function deleteTask($id){
        $task=Task::find($id);
        $task->delete();
-       Helper::save_notification_Task($group,$task,false);
+       Helper::save_notification_Task(Group::find($task->group_id),$task,false);
        return ['response'=>'This task deleted successfully'];
    }
    //----------------------------- this to change certain to do task position

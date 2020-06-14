@@ -8,6 +8,8 @@ use App\UserRequest;
 use App\Http\Controllers\Api\GroupController;
 use App\Helpers\Helper;
 use Illuminate\Http\Response;
+use App\User;
+use App\Group;
 class UserRequestController extends Controller
 {
 
@@ -36,6 +38,7 @@ class UserRequestController extends Controller
             if(User::find($outRequest->user_id)->enable){
             Helper::save_notification_for_request(User::find($outRequest->user_id),Group::find($outRequest->group_id),false);
             }
+
             return ['response'=>'Request rejected successfully'];
         }
         else{

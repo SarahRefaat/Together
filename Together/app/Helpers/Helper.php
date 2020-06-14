@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
         $notification = new Notification;
         $notification->title="$group->name Request";
         $request_value=$state?"accepted":"rejected";
-        $notification->body="your request to join $group->name group hase been $request_value";
+        $notification->body="your request to join $group->name has been $request_value";
         $notification->user_id= $user->id;
         $notification->info=$state?"Accept-Request":"Reject-Request";
         $notification->group_id=$group->id;
@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\DB;
     static function save_notification_for_todo(Group $group,Task $task,$todo_state)
     {
         $user_ids = DB::table('group_user')
-        ->where(['user_id','<>',$group->admin_id])
+        ->where('user_id','<>',$group->admin_id)
         ->get('user_id');
         foreach ($user_ids as $id)
         {
@@ -41,7 +41,7 @@ use Illuminate\Support\Facades\DB;
     static function save_notification_Task(Group $group,Task $task,$state)
     {
         $user_ids = DB::table('group_user')
-        ->where(['user_id','<>',$group->admin_id])
+        ->where('user_id','<>',$group->admin_id)
         ->get('user_id');
         foreach ($user_ids as $id)
         {
