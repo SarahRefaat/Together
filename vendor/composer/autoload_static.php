@@ -43,6 +43,10 @@ class ComposerStaticIniteed37114cdee74b0d07deb49ce570ab9
             'Illuminate\\Contracts\\' => 21,
             'Illuminate\\Container\\' => 21,
         ),
+        'F' => 
+        array (
+            'Faker\\' => 6,
+        ),
         'D' => 
         array (
             'Doctrine\\Inflector\\' => 19,
@@ -113,6 +117,10 @@ class ComposerStaticIniteed37114cdee74b0d07deb49ce570ab9
         'Illuminate\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/illuminate/container',
+        ),
+        'Faker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
         ),
         'Doctrine\\Inflector\\' => 
         array (

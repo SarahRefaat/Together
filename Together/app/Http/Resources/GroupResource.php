@@ -3,6 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Interest;
+use App\Http\Resources\GroupResource;
 
 class GroupResource extends JsonResource
 {
@@ -25,7 +27,9 @@ class GroupResource extends JsonResource
             'level'=>$this->level,
             'photo' => $this->photo,
             'interest_id'=>$this->interest_id,
-            'id'=>$this->admin_id
+            'duration'=>$this->duration,
+            'id'=>$this->admin_id,
+            'interest_name'=>Interest::find($this->interest_id)->name,
         ];
     }
 }

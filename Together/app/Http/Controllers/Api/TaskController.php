@@ -6,7 +6,7 @@ use App\User;
 use App\Group;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Helpers\Helper;
 class TaskController extends Controller
 {
     //--------------------this functgion to add new task
@@ -17,6 +17,7 @@ class TaskController extends Controller
         if($group->admin_id==$adminMember->id){
         $task=Task::create($request->except('current_user_id'));
         if($task){
+            Helper::save_notification_Task($group,$task,true);
             return ['response'=>'Task added Successfully'];
         }
     }
@@ -31,6 +32,7 @@ class TaskController extends Controller
         $task=Task::find($id);
         if($task){
             $task->update(array('status'=>'in-progress'));
+            save_notification_for_todo($task->group(),$task,"doing");
             return ['response'=>'Moved successfully'];
         }
         return ['response'=>'This task not exist'];
@@ -40,6 +42,7 @@ class TaskController extends Controller
         $task=Task::find($id);
         if($task){
             $task->update(array('status'=>'to do'));
+            save_notification_for_todo($task->group(),$task,"to do");
             return ['response'=>'Moved successfully'];
         }
         return ['response'=>'This task not exist'];
@@ -50,6 +53,7 @@ class TaskController extends Controller
         $task=Task::find($id);
         if($task){
             $task->update(array('status'=>'done'));
+            save_notification_for_todo($task->group(),$task,"done");
             return ['response'=>'Moved successfully'];
         }
         return ['response'=>'This task not exist'];
@@ -66,7 +70,6 @@ class TaskController extends Controller
                array_push($tasksList,$taskEle);
                array_push($position,$task->position);
             }
-            // ksort($tasksList);
             array_multisort($position, SORT_ASC, $tasksList);
             return $tasksList;
         }
@@ -88,7 +91,7 @@ class TaskController extends Controller
             return $tasksList;
         }
         return ['response'=>'this group not exist'];
-    } 
+    }
     //--------------------- this to list done functions
     public function listDone($groupId){
         $group=Group::find($groupId);
@@ -115,13 +118,14 @@ class TaskController extends Controller
     }
     return ['response'=>'This task not exist'];
    }
-   //---------------------- this to delete certain task 
+   //---------------------- this to delete certain task
    public function deleteTask($id){
        $task=Task::find($id);
        $task->delete();
+       Helper::save_notification_Task($group,$task,false);
        return ['response'=>'This task deleted successfully'];
    }
-   //----------------------------- this to chsnge certain to do task position
+   //----------------------------- this to change certain to do task position
    public function changeDoPosition($taskId,$position){
       $task=Task::find($taskId);
       if($task){
@@ -139,7 +143,7 @@ class TaskController extends Controller
         $task->save();
           return ['response'=>'Position changed successfully'];
     }
-        return ['response'=>'This task didnt move correctly'];   
+        return ['response'=>'This task didnt move correctly'];
    }
    //------------------------------- this to change done tasks position
    public function changeDonePosition($taskId,$position){
@@ -147,10 +151,10 @@ class TaskController extends Controller
     if($task){
         $task->position=$position;
         $task->save();
-        
+
           return ['response'=>'Position changed successfully'];
     }
-        return ['response'=>'This task didnt move correctly'];   
+        return ['response'=>'This task didnt move correctly'];
    }
    //--------------------this function to update position
    public function dragAdrop(Request $request){

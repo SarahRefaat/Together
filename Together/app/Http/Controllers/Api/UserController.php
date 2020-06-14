@@ -13,7 +13,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\NotificationResource;
 use App\Notification;
-
+use App\Helpers\Helper;
+use Illuminate\Http\Response;
 class UserController extends Controller
 {
     //-------------------this function to sign up
@@ -34,14 +35,6 @@ class UserController extends Controller
         }
         //-------------- then if itis his first sign up
         $user=new User;
-        // -------------------here if pic is attached
-        // if($request->file('photo')){
-        //     $image=$request->photo;
-        //     $destinationPath = 'images/'; // upload path
-        //     $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-        //     $image->move($destinationPath, $profileImage);
-        //     $user->photo = $profileImage;
-        // }
         // ------------her to attach his intrests
         $interestArr=array();
         if($request->interests){
@@ -51,7 +44,7 @@ class UserController extends Controller
              }
             }
 
-        //--------------------here if user has other interests allah y5rb bytooo
+        //--------------------here if user has other interests
         $user->name = $request->name;
         $user->email=$request->email;
         $user->fill(['password' => encrypt($request->password)]);
@@ -60,16 +53,13 @@ class UserController extends Controller
         $user->address=$request->address;
         $user->photo=$request->photo;
         $user->save();
-        //---------here i attach el inteerests
+        //---------here i attach el interests
         $user->interests()->attach($interestArr);
         //------------- here user saved
-
         if($user){
-       // return ['response'=>'Signed up Successfully'];
           $response=$this->signin($request);
           return $response;
          }
-
         else {
 
             return ['response'=>'Please fill all required feilds'];
@@ -85,8 +75,6 @@ class UserController extends Controller
          $user=User::where('email',$request->email)->first();
 
          if($user){
-            //return $user->email;
-           //  $user=User::where('password',$request->password)->first();
            $pasword=Crypt::decrypt($user->password);
              if($request->password == $pasword){
                 $token=$user->createToken($request->email)->plainTextToken;
@@ -138,7 +126,6 @@ class UserController extends Controller
     public function update(Request $request,$id){
             $user=User::where('id',$id)->first();
             if($user){
-            //$user=User::where('id',$id)->first()->update($request->all());
             $user->name = $request->name;
             $user->email=$request->email;
             $user->fill(['password' => encrypt($request->password)]);
@@ -243,12 +230,17 @@ class UserController extends Controller
       public function notifications(){
         $userId = request()->user_id;
         $user = User::find($userId);
+        if($user){
         $notifications = Notification::where('user_id',$userId)->orderBy('id', 'DESC')->paginate(10);
         $notificationResource = NotificationResource::collection($notifications);
           return [
               'data'=>$notificationResource,
               'status'=>$user->enable
             ];
+        }else{
+            $response = new Response(["response"=>"This user does not exist !!"]);
+            return $response->setStatusCode(404);
+        }
       }
 
 
@@ -260,7 +252,8 @@ class UserController extends Controller
         $user->update(['enable'=>true]);
         return ['response'=>'notification enabled'];
     }else{
-        return ["response"=>"User Does not exist !!"];
+        $response = new Response(["response"=>"This user does not exist !!"]);
+        return $response->setStatusCode(404);
     }
     }
     //this function to disable notification --nahla
@@ -271,8 +264,10 @@ class UserController extends Controller
         $user->update(['enable'=>false]);
         return ['response'=>'notification disabled'];
     }else{
-        return ["response"=>"User Does not exist !!"];
+        $response = new Response(["response"=>"This user does not exist !!"]);
+        return $response->setStatusCode(404);
     }
+
     }
     //this function to update device token for notifications --nahla
     public function updateDeviceToken(){
@@ -282,16 +277,10 @@ class UserController extends Controller
         $user->update(['device_token'=>request()->token]);
         return ['response'=>'device token update successfully'];
     }else{
-        return ["response"=>"User Does not exist !!"];
+        $response = new Response(["response"=>"This user does not exist !!"]);
+        return $response->setStatusCode(404);
     }
 
     }
-      //this function to return user requests -- nahla
-      public function requests(){
-       // $userId = request()->user_id;
-        //$user = User::find($userId);
-          return 0;
-      }
-
 
 }

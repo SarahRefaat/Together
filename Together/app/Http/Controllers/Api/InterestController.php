@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Resources\InterestResource;
 use App\Http\Resources\GroupResource;
 use App\Interest;
+use App\User;
+use App\Group;
+use Illuminate\Http\Response;
 
 class InterestController extends Controller
 {
@@ -23,7 +26,8 @@ class InterestController extends Controller
         if($interest){
         return new InterestResource($interest);
         }else{
-            return ["response"=>"This interest does not exist !!.."];
+            $response = new Response(['response'=>'This interest does not exist !!..']);
+            return $response->setStatusCode(404);
         }
     }
     //this function to display groups of single interest
@@ -32,20 +36,17 @@ class InterestController extends Controller
         $interest = Interest::find($interestId);
         if($interest){
         $groups =  $interest->groups;
-        if(count($groups)>0){
         $groupResource = GroupResource::collection($groups);
-        return ["response"=>$groupResource];
-        }else{
-            return ["response"=>"There is no avaliable groups in this interest .."];
-        }
+        return $groupResource;
         }
         else{
-            return ["response"=>"This interest does not exist !!.."];
+            $response = new Response(['response'=>'This interest does not exist !!..']);
+            return $response->setStatusCode(404);
         }
     }
     //-------------------- here u can get all interests
     public function interests(Request $request){
       return Interest::all();
     }
-    
+
 }

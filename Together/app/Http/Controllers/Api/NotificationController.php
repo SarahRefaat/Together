@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Notification;
 use App\Http\Resources\NotificationResource;
 use App\User;
-
+use Illuminate\Http\Response;
 class NotificationController extends Controller
 {
     public function show(){
@@ -17,7 +17,8 @@ class NotificationController extends Controller
             return new NotificationResource($notification);
         }
         else {
-            return  ["response"=>"This notification does not exist !!"];
+            $response = new Response(["response"=>"This notification does not exist !!"]);
+            return $response->setStatusCode(404);
         }
     }
     public function destroy($id){
@@ -26,7 +27,8 @@ class NotificationController extends Controller
                $singleNotification->delete();
                return  ["response"=>"Notification removed successfully !!"];
            }else{
-               return  ["response"=>"This notification does not exist !!"];
+            $response = new Response(["response"=>"This notification does not exist !!"]);
+            return $response->setStatusCode(404);
            }
     }
 }
