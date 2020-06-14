@@ -483,6 +483,7 @@ class ComposerStaticInitba16cdc42cd717ebf4d1aea123878e4b
         'App\\Http\\Controllers\\API\\NotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/NotificationController.php',
         'App\\Http\\Controllers\\Api\\GroupController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/GroupController.php',
         'App\\Http\\Controllers\\Api\\InterestController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/InterestController.php',
+        'App\\Http\\Controllers\\Api\\MessageController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/MessageController.php',
         'App\\Http\\Controllers\\Api\\TaskController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/TaskController.php',
         'App\\Http\\Controllers\\Api\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/UserController.php',
         'App\\Http\\Controllers\\Api\\UserRequestController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/UserRequestController.php',

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
+    public $incrementing = false;
     //--------------- this represent relation btn message and group
     public function group(){
         return $this->belongsTo('App\Group');

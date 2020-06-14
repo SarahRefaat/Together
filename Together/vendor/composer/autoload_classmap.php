@@ -13,6 +13,7 @@ return array(
     'App\\Http\\Controllers\\API\\NotificationController' => $baseDir . '/app/Http/Controllers/Api/NotificationController.php',
     'App\\Http\\Controllers\\Api\\GroupController' => $baseDir . '/app/Http/Controllers/Api/GroupController.php',
     'App\\Http\\Controllers\\Api\\InterestController' => $baseDir . '/app/Http/Controllers/Api/InterestController.php',
+    'App\\Http\\Controllers\\Api\\MessageController' => $baseDir . '/app/Http/Controllers/Api/MessageController.php',
     'App\\Http\\Controllers\\Api\\TaskController' => $baseDir . '/app/Http/Controllers/Api/TaskController.php',
     'App\\Http\\Controllers\\Api\\UserController' => $baseDir . '/app/Http/Controllers/Api/UserController.php',
     'App\\Http\\Controllers\\Api\\UserRequestController' => $baseDir . '/app/Http/Controllers/Api/UserRequestController.php',

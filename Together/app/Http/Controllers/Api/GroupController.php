@@ -148,7 +148,7 @@ class GroupController extends Controller
     }
         return ['response'=>'this group doesnt exist'];
       }
-      //------------------ this function for user how wants to leave how 7orr
+      //------------------ this function for user how wants to leave howa 7orr
       public function leave($groupid,$id){
         $group=Group::find($groupid);
         $user=User::find($id);
