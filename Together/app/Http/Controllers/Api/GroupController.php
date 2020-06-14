@@ -9,6 +9,7 @@ use App\UserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helpers\Helper;
+use App\Message;
 use Illuminate\Http\Response;
 class GroupController extends Controller
 {
