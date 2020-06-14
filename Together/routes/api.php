@@ -90,7 +90,7 @@ Route::post('/changePosition','Api\TaskController@changePosition')->middleware('
 //---------------------------- this to get old messages
 Route::get('/getChat/{groupId}','Api\GroupController@getChat')->middleware('auth:sanctum');
 //-------------------------------- this route to delete certain message
-Route::get('/deleteMessage/{messageId}','Api\MessageController@delete')->middleware('auth:sanctum');
+Route::post('/deleteMessage','Api\MessageController@delete')->middleware('auth:sanctum');
 
 //...................................................... nahla - routes
 
