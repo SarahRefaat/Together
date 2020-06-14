@@ -183,16 +183,16 @@ class UserController extends Controller
         return ['response'=>'This user is not exist'];
       }
         //---------------------------- this function used to logout
-        public function logout($id){
-            $user=User::find($id);
+        public function logout(Request $request){
+            $givenToken=$request->token;
+            $token=substr($givenToken,2,strlen($givenToken)-2);
+            //return $token;
+            $user=PersonalAccessToken::where('token',$token)->first();
             if($user){
-               $tokens=PersonalAccessToken::where('name',$user->email)->get();
-               foreach($tokens as $token){
-                 $token->delete();
-               }
+               $user->delete();
                return ['response'=>'logout successfully'];
             }
-
+             return ['response'=>'error param'];
         }
         //----------------------------- this to return status of user(one of group , not in send request)
        public function getStatus ($groupId,$id){

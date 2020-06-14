@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTaskDescriptionColumnInTasks extends Migration
+class AddStringIdForMessages extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class AddTaskDescriptionColumnInTasks extends Migration
      */
     public function up()
     {
-        Schema::table('tasks', function (Blueprint $table) {
+        //
+        Schema::table('messages', function (Blueprint $table) {
             //
-         $table->string('description',255)->nullable();
+            $table->String('id',254)->primary();
         });
     }
 
@@ -26,8 +27,6 @@ class AddTaskDescriptionColumnInTasks extends Migration
      */
     public function down()
     {
-        Schema::table('tasks', function (Blueprint $table) {
-            //
-        });
+        //
     }
 }

@@ -12,6 +12,7 @@ class TaskController extends Controller
     //--------------------this functgion to add new task
     public function add(Request $request){
         $group=Group::find($request->group_id);
+        if($group){
         $adminMember=User::find($request->current_user_id);
         if($group->admin_id==$adminMember->id){
         $task=Task::create($request->except('current_user_id'));
@@ -23,7 +24,8 @@ class TaskController extends Controller
     else{
         return ['response'=>'U aren\'t the admin'];
     }
-        return ['response'=>'Error with params leeh ha leeh'];
+   }
+        return ['response'=>'This group doesn\'t exist'];
     }
     //----------------------this function to move from to do to progress
     public function moveToProgress($id){
