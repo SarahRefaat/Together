@@ -75,17 +75,8 @@ Route::post('/updateTask/{id}','Api\TaskController@updateTask')->middleware('aut
 Route::get('/do/{id}','Api\TaskController@moveTodo')->middleware('auth:sanctum');
 //-------------------this to  change todo Position tasks
 Route::get('/changeTodoPosition/{taskId}/{position}','Api\TaskController@changeDoPosition')->middleware('auth:sanctum');
-<<<<<<< HEAD
 //------------------------ this route to logout
 Route::post('/logout','Api\UserController@logout');//->middleware('auth:sanctum');
-=======
-//-------------------this to  change Progress Position tasks
-Route::get('/changeProgressPosition/{taskId}/{position}','Api\TaskController@changeProgressPosition')->middleware('auth:sanctum');
-//-------------------this to  change Done Position tasks
-Route::get('/changeDonePosition/{taskId}/{position}','Api\TaskController@changeDonePosition')->middleware('auth:sanctum');
-//------------------------ this route to logout
-Route::get('/logout/{id}','Api\UserController@logout');
->>>>>>> fc976cf10716ddc524a6388de9db7dc1addd05aa
 //--------------------- this to know status of certain user according to certain group
 Route::get('/status/{groupId}/{id}','Api\UserController@getStatus')->middleware('auth:sanctum');
 //--------------------- this to drag Drop
