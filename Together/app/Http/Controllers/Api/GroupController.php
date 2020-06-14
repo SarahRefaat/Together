@@ -241,7 +241,7 @@ class GroupController extends Controller
     public function getChat($groupId){
       $group=Group::find($groupId);
       $allMessages=array();
-      $messages=$group->messages;
+      $messages=Message::where('group_id',$groupId)->all();
       foreach($messages as $message){
         $sender=$message->user;
         $senderName=$sender->name;
