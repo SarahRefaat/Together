@@ -75,7 +75,7 @@ class GroupController extends Controller
         $user=User::find($id);
         //------------ this user not in the group ??????
         $existUsers=$group->users;
-        return $group->users;
+       // return $group->users;
         foreach($existUsers as $exist){
               if($user->id == $exist->id){
                 return ['response'=>'This user already in this group'];
@@ -185,7 +185,13 @@ class GroupController extends Controller
             if($groupWithTheSameTitle&&$groupWithTheSameTitle->id!=$groupId){
               return ['response'=>'This title already exist'];
             }
-          $group->update($request->only('name','description','address','photo','duration'));
+            $group->name=$request->name;
+            $group->description=$request->description;
+            $group->address=$request->address;
+            $group->photo=$request->photo;
+            $group->duration=$request->duration;
+            $group->save();
+         // $group->update($request->only('name','description','address','photo','duration'));
           if($group){
             return ['response'=>'updated successfully'];
           }
