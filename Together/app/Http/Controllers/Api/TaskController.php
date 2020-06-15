@@ -53,7 +53,7 @@ class TaskController extends Controller
         $task=Task::find($id);
         if($task){
             $task->update(array('status'=>'done'));
-            Helper::save_notification_for_todo($task->group(),$task,"done");
+            Helper::save_notification_for_todo(Group::find($task->group_id),$task,"done");
             return ['response'=>'Moved successfully'];
         }
         return ['response'=>'This task not exist'];
