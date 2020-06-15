@@ -41,6 +41,10 @@ class User extends Authenticatable
     public function groups(){
         return $this->belongsToMany('App\Group');
     }
+    //------------------------ this  of admin
+    public function mygroups(){
+        return $this->hasMany('App\Group');
+    }
     //-------------this represent many to many interests and group
     public function interests(){
         return $this->belongsToMany('App\Interest');

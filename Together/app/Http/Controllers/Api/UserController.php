@@ -198,16 +198,16 @@ class UserController extends Controller
        public function getStatus ($groupId,$id){
         $group=Group::find($groupId);
         $members=$group->users;
-       // return $members;
+        //return $members;
         foreach ($members as $member){
-            if($member->id==$id){
+            if($member->id == $id){
                 $status ='Member of this group';
-                return ['response'=>$status];
+                return ['response'=> $status];
             }
             else {
                 if($group->current_number_of_members == $group->max_member_number){
                     return ['response'=>'This group is full'];
-                }
+                }//return $group->users;
                 $status = 'Not member';
             }
         }
