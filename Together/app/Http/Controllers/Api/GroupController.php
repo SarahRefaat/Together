@@ -185,7 +185,13 @@ class GroupController extends Controller
             if($groupWithTheSameTitle&&$groupWithTheSameTitle->id!=$groupId){
               return ['response'=>'This title already exist'];
             }
-          $group->update($request->only('name','description','address','photo','duration'));
+            $group->name=$request->name;
+            $group->description=$request->description;
+            $group->address=$request->address;
+            $group->photo=$request->photo;
+            $group->duration=$request->duration;
+            $group->save();
+         // $group->update($request->only('name','description','address','photo','duration'));
           if($group){
             return ['response'=>'updated successfully'];
           }
