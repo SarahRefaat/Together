@@ -8,6 +8,7 @@ use App\UserRequest;
 use App\Http\Controllers\Api\GroupController;
 use App\Helpers\Helper;
 use Illuminate\Http\Response;
+use App\User;
 class UserRequestController extends Controller
 {
 
