@@ -15,7 +15,7 @@ class AddInterestToGroups extends Migration
     {
         Schema::table('groups', function (Blueprint $table) {
             //
-            $table->foreignId('interest_id');
+          $table->foreignId('interest_id');
         });
     }
 

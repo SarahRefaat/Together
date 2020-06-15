@@ -75,6 +75,7 @@ class GroupController extends Controller
         $user=User::find($id);
         //------------ this user not in the group ??????
         $existUsers=$group->users;
+        return $group->users;
         foreach($existUsers as $exist){
               if($user->id == $exist->id){
                 return ['response'=>'This user already in this group'];
@@ -85,6 +86,7 @@ class GroupController extends Controller
         $group->current_number_of_members=$group->current_number_of_members+1;
         $group->save();
         $group->users()->attach($user);
+        
         return ['response'=>'Member added successfully'];
         }
         else{
@@ -243,7 +245,7 @@ class GroupController extends Controller
     public function getChat($groupId){
       $group=Group::find($groupId);
       $allMessages=array();
-      $messages=Message::where('group_id',$groupId)->all();
+      $messages=Message::where('group_id',$groupId)->get();
       foreach($messages as $message){
         $sender=$message->user;
         $senderName=$sender->name;

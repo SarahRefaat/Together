@@ -32,11 +32,11 @@ Route::get('/interest','Api\InterestController@interests');
 //-----------------------------------this to update profile
 Route::post('/update/{id}','Api\UserController@update')->middleware('auth:sanctum');
 //-------------------------this route to create group
-Route::post('/createGroup','Api\GroupController@create')->middleware('auth:sanctum');
+Route::post('/createGroup','Api\GroupController@create');//->middleware('auth:sanctum');
 //-------------------------this route to show group
 Route::get('/show/{groupid}','Api\GroupController@show')->middleware('auth:sanctum');
 //-----------------------------this route to add member
-Route::get('/add/{groupid}/{id}','Api\GroupController@addMember')->middleware('auth:sanctum');
+Route::get('/add/{groupid}/{id}','Api\GroupController@addMember');//->middleware('auth:sanctum');
 //----------------------------this route to remove member
 Route::get('/remove/{groupid}/{id}','Api\GroupController@removeMember')->middleware('auth:sanctum');
 //----------------------------this route to add new task
@@ -78,7 +78,7 @@ Route::get('/changeTodoPosition/{taskId}/{position}','Api\TaskController@changeD
 //------------------------ this route to logout
 Route::post('/logout','Api\UserController@logout');//->middleware('auth:sanctum');
 //--------------------- this to know status of certain user according to certain group
-Route::get('/status/{groupId}/{id}','Api\UserController@getStatus')->middleware('auth:sanctum');
+Route::get('/status/{groupId}/{id}','Api\UserController@getStatus');//->middleware('auth:sanctum');
 //--------------------- this to drag Drop
 Route::post('/dragAdrop','Api\TaskController@dragAdrop')->middleware('auth:sanctum');
 //----------------------------------- this to get percentage to indicate group progress
@@ -90,7 +90,7 @@ Route::post('/changePosition','Api\TaskController@changePosition')->middleware('
 //---------------------------- this to get old messages
 Route::get('/getChat/{groupId}','Api\GroupController@getChat')->middleware('auth:sanctum');
 //-------------------------------- this route to delete certain message
-Route::get('/deleteMessage/{messageId}','Api\MessageController@delete')->middleware('auth:sanctum');
+Route::post('/deleteMessage','Api\MessageController@delete')->middleware('auth:sanctum');
 
 //...................................................... nahla - routes
 

@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 class MessageController extends Controller
 {
     //---------------------- this function for admin to delete certain message
-    public function delete(Request $request,$messageId){
-        $message=Message::find($messageId);
+    public function delete(Request $request){
+        $message=Message::find($request->msg_id);
         if($message){
-           if($message->group->admin_id==$request->input('current_user_id')){
+           if($message->group->admin_id == $request->input('current_user_id')){
               $message->delete();
               return ['response'=>'This messge deleted successfully'];
            }

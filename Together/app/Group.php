@@ -15,6 +15,10 @@ class Group extends Model
     public function users(){
         return $this->belongsToMany('App\User');
     }
+    //------------------------- this to get members of group
+    public function admin(){
+        return $this->belongsToOne('App\User');
+    }
     //----------------- this represent one to many realtion btn group and task
     public function tasks(){
         return $this->hasMany('App\Task');
