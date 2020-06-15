@@ -23,7 +23,8 @@ use Illuminate\Support\Facades\DB;
     static function save_notification_for_todo(Group $group,Task $task,$todo_state)
     {
         $user_ids = DB::table('group_user')
-        ->where('user_id','<>',$group->admin_id)
+        ->where(['user_id','<>',$group->admin_id],
+        ['group_id',$group->id])
         ->get('user_id');
         foreach ($user_ids as $id)
         {
@@ -41,7 +42,8 @@ use Illuminate\Support\Facades\DB;
     static function save_notification_Task(Group $group,Task $task,$state)
     {
         $user_ids = DB::table('group_user')
-        ->where('user_id','<>',$group->admin_id)
+        ->where(['user_id','<>',$group->admin_id],
+        ['group_id',$group->id])
         ->get('user_id');
         foreach ($user_ids as $id)
         {
