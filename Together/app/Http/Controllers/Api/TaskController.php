@@ -122,7 +122,7 @@ class TaskController extends Controller
    public function deleteTask($id){
        $task=Task::find($id);
        $task->delete();
-       Helper::save_notification_Task($group,$task,false);
+       Helper::save_notification_Task(Group::find($task->group_id),$task,false);
        return ['response'=>'This task deleted successfully'];
    }
    //----------------------------- this to change certain to do task position
