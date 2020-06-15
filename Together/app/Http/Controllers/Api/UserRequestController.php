@@ -17,10 +17,10 @@ class UserRequestController extends Controller
         if($outRequest){
             $groupController= new GroupController;
             $response=GroupController::addMember($outRequest->group_id,$outRequest->user_id,$request);
-            $outRequest->delete();
             if(User::find($outRequest->user_id)->enable){
             Helper::save_notification_for_request(User::find($outRequest->user_id),Group::find($outRequest->group_id),true);
             }
+            $outRequest->delete();
             return $response;
         }
         else{
@@ -32,10 +32,10 @@ class UserRequestController extends Controller
     public function reject($requestId){
         $outRequest=UserRequest::find($requestId);
         if($outRequest){
-            $outRequest->delete();
             if(User::find($outRequest->user_id)->enable){
             Helper::save_notification_for_request(User::find($outRequest->user_id),Group::find($outRequest->group_id),false);
             }
+            $outRequest->delete();
             return ['response'=>'Request rejected successfully'];
         }
         else{

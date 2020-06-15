@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
         $notification = new Notification;
         $notification->title="$group->name Request";
         $request_value=$state?"accepted":"rejected";
-        $notification->body="your request to join $group->name group hase been $request_value";
+        $notification->body="your request to join $group->name has been $request_value";
         $notification->user_id= $user->id;
         $notification->info=$state?"Accept-Request":"Reject-Request";
         $notification->group_id=$group->id;
