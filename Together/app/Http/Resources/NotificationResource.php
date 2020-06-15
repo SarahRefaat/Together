@@ -22,7 +22,7 @@ class NotificationResource extends JsonResource
             'body' => $this->body,
             'img' => $this->img,
             'info' => $this->info,
-            'group'=>new GroupResource(Group::find(1)),
+            'group'=>new GroupResource(Group::find($this->group_id)),
         ];
     }
 }
