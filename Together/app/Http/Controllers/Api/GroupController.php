@@ -75,7 +75,7 @@ class GroupController extends Controller
         $user=User::find($id);
         //------------ this user not in the group ??????
         $existUsers=$group->users;
-        return $group->users;
+       // return $group->users;
         foreach($existUsers as $exist){
               if($user->id == $exist->id){
                 return ['response'=>'This user already in this group'];
